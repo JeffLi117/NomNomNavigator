@@ -2,9 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './screens/Home'
-import RestaurantScreen from './screens/Restaurant'
-import RestaurantDetailScreen from './screens/Restaurant'
+import HomeScreen from './screens/Home';
+import RestaurantDetailScreen from './screens/RestaurantDetail';
+import RestaurantQuickViewScreen from './screens/RestaurantQuickView';
 
 const Stack = createStackNavigator();
 
@@ -13,7 +13,7 @@ export default function App() {
     <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Restaurant" component={RestaurantScreen} />
+            <Stack.Screen name="RestaurantQuickView" component={RestaurantQuickViewScreen} />
             <Stack.Screen name="RestaurantDetail" component={RestaurantDetailScreen} />
         </Stack.Navigator>
     </NavigationContainer>
