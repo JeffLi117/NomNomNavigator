@@ -9,7 +9,7 @@ Simply choose from a few categories and filters, such as minimum star rating, di
 
 # Who worked on NomNomNavigator?
 
-Jeffrey Li
-Valentina Valverde
-Cindy Pan
-Hannah Nguyen
+Jeffrey Li  
+Valentina Valverde  
+Cindy Pan  
+Hannah Nguyen  
