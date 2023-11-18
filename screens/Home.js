@@ -4,6 +4,8 @@ import { AppContext } from '../context/AppContext';
 import FilterPicker from '../components/FilterPicker';
 import ZipCodeForm from '../components/ZipCodeForm'
 import { handleGeocoding, handleNearbySearch } from '../API';
+import GetExpoLocation from '../components/GetExpoLocation';
+
 
 const HomeScreen = ({ navigation }) => {
   const[zipCode, setZipCode] = useState("");
@@ -43,6 +45,7 @@ const HomeScreen = ({ navigation }) => {
     <ScrollView>
       <View>
         <Text>Home Screen</Text>
+        <GetExpoLocation />
         <FilterPicker />
         <ZipCodeForm onSubmit={handleZipCodeSubmit} />
         <TouchableOpacity
