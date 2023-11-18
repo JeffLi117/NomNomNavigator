@@ -7,7 +7,7 @@ const handleGeocoding = async (zipCode) => {
     const geocodingResponse = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${API_KEY}`
     );
-    
+
     const { data } = geocodingResponse;
 
     if (data.results.length > 0) {
