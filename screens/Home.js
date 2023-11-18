@@ -1,16 +1,38 @@
-import React from 'react';
-import { View, Text, Button } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { AppContext } from '../context/AppContext';
+import FilterPicker from '../components/FilterPicker';
 
 const HomeScreen = ({ navigation }) => {
+  const { toggleSelectedCuisines, toggleSelectedStars, toggleSelectedPrice } = useContext(AppContext);
+
+  const handleNavigate = () => {
+    navigation.navigate('RestaurantQuickView');
+  };
+
   return (
     <View>
       <Text>Home Screen</Text>
-      <Button
-        title="Go to RestaurantQuickView"
-        onPress={() => navigation.navigate('RestaurantQuickView')}
-      />
+      <FilterPicker />
+      <TouchableOpacity
+        style={styles.findButton}
+        onPress={handleNavigate}
+      >
+        <Text style={styles.buttonText}>Go to RestaurantQuickView (Find)</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 export default HomeScreen;
+
+
+const styles = StyleSheet.create({
+  findButton: {
+    backgroundColor: 'black', 
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: 'white',
+  },
+});
