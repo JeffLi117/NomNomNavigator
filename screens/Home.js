@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import FilterPicker from '../components/FilterPicker';
+import GetExpoLocation from '../components/GetExpoLocation';
 
 const HomeScreen = ({ navigation }) => {
   const { toggleSelectedCuisines, toggleSelectedStars, toggleSelectedPrice } = useContext(AppContext);
@@ -13,6 +14,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View>
       <Text>Home Screen</Text>
+      <GetExpoLocation />
       <FilterPicker />
       <TouchableOpacity
         style={styles.findButton}
