@@ -20,6 +20,10 @@ const HomeScreen = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>Go to RestaurantQuickView (Find)</Text>
       </TouchableOpacity>
+      <Button
+        title="Go to MapScreen"
+        onPress={() => navigation.navigate('MapScreen')}
+      />
     </View>
   );
 };
