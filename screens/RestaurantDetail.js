@@ -1,11 +1,14 @@
 import React from 'react';
-import { View, Text, Button, Linking, StyleSheet } from 'react-native';
+import { View, Text, Button, Linking, StyleSheet, SafeAreaView } from 'react-native';
+import CarouselCards from '../components/CarouselCards.js'
 
 
 const RestaurantDetailScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.image} >restaurant picture or food picture</Text>
+       <SafeAreaView style={styles.carousel}>
+      <CarouselCards />
+    </SafeAreaView>
       <Text style={styles.title}>Restaurant Title</Text>
       <View style={styles.detailsContainer}>
         <Text style={styles.title}>restaurantDetails.name</Text>
@@ -52,6 +55,12 @@ const styles = StyleSheet.create({
     color: 'green', // Change color as needed
     marginBottom: 12,
     fontWeight: 'bold', // Make it bold
+  },
+  carousel: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 50
   },
 })
 
