@@ -9,6 +9,10 @@ const HomeScreen = ({ navigation }) => {
         title="Go to RestaurantQuickView"
         onPress={() => navigation.navigate('RestaurantQuickView')}
       />
+      <Button
+        title="Go to MapScreen"
+        onPress={() => navigation.navigate('MapScreen')}
+      />
     </View>
   );
 };
