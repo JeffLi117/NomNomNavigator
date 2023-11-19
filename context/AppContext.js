@@ -7,9 +7,14 @@ const AppProvider = ({ children }) => {
     "asian": 0, "japanese": 0, "korean": 0, "american": 0, "breakfast": 0, "diner": 0, "fast food": 0, "italian": 0,
   });
   const [selectedStars, setSelectedStars] = useState(null);
-  const [selectedPrice, setSelectedPrice] = useState({
-    "$": 0, "$$": 0, "$$$": 0, "$$$$": 0,
-  });
+  const [selectedPrice, setSelectedPrice] = useState([
+    {"text": "$", priceLevel: 0, "toggle": 0},
+    {"text": "$$", priceLevel: 1, "toggle": 0},
+    {"text": "$$$", priceLevel: 2, "toggle": 0},
+    {"text": "$$$$", priceLevel: 3, "toggle": 0},
+    {"text": "$$$$$", priceLevel: 4, "toggle": 0},
+  ]);
+  const [showRange, setShowRange] = useState([]);
   // handleSetLocation makes location an object; ex:
   // {
   //   latitude: someNum,
@@ -30,15 +35,17 @@ const AppProvider = ({ children }) => {
     setSelectedStars(num);
   };
   
-  const toggleSelectedPrice = (objKey) => {
-    if (selectedPrice[objKey] === 0) {
-        setSelectedPrice({...selectedPrice, [objKey]: 1});
-    } else {
-        setSelectedPrice({...selectedPrice, [objKey]: 0});
-    }
+  const toggleSelectedPrice = (priceLevel) => {
+    setSelectedPrice(prevSelectedPrice => {
+      return prevSelectedPrice.map((element) => {
+        if (element.priceLevel === priceLevel) {
+          return { ...element, toggle: element.toggle === 0 ? 1 : 0 };
+        }
+        return element;
+      });
+    });
   };
 
-  
   const handleSetLocation = (location) => {
     // location ex:
     // {
@@ -58,13 +65,32 @@ const AppProvider = ({ children }) => {
   const handleSetErrorMsg = (str) => {
     setErrorMsg(str);
   };
+
+  useEffect(() => {
+    let counter = 0;
+    let minMaxArr = [];
+    // count how many price levels have toggle values of 1
+    for (let i = 0; i < selectedPrice.length; i++) {
+      if (selectedPrice[i].toggle === 1) {
+        minMaxArr.push(selectedPrice[i].priceLevel)
+        counter += 1;
+      }
+    }
+    if (counter > 1) {
+      let min = Math.min(...minMaxArr);
+      let max = Math.max(...minMaxArr);
+      setShowRange([min, max]);
+    } else {
+      setShowRange([]);
+    }
+  }, [selectedPrice])
   
   useEffect(() => {
-    console.log("new selectedStars is ", selectedStars)
-  }, [selectedStars])
+    console.log("showRange is ", showRange);
+  }, [showRange])
 
   return (
-    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg }}>
+    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg, showRange }}>
       {children}
     </AppContext.Provider>
   );
