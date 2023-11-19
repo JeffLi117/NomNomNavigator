@@ -23,9 +23,9 @@ const handleGeocoding = async (zipCode) => {
 
 const handleNearbySearch = async (latitude, longitude, radius = 24000, type = 'restaurant') => {
   try {
-    const nearbySearchResponse = await axios.get(
-      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${API_KEY}`
-    );
+    let url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${API_KEY}`;
+
+    const nearbySearchResponse = await axios.get(url);
 
     const { data } = nearbySearchResponse;
     return data.results;
@@ -35,5 +35,5 @@ const handleNearbySearch = async (latitude, longitude, radius = 24000, type = 'r
   }
 };
 
-export { handleGeocoding, handleNearbySearch };
 
+export { handleGeocoding, handleNearbySearch };
