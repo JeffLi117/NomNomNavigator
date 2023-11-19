@@ -18,6 +18,10 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
           <CarouselCards />
         </SafeAreaView>
         <Text style={styles.title}>Restaurant Name</Text>
+        <View style={styles.infoContainer}>
+          <Text style={styles.info}>Cuisine</Text>
+          <Text style={styles.info}>$$</Text>
+        </View>
 
         <View style={styles.bottomButtContainer}>
           <TouchableOpacity
@@ -44,12 +48,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#f2e5d7",
     paddingBottom: 20,
   },
-
   carousel: {
-    height: 300,
+    height: 450,
     marginTop: 20,
     alignItems: "center",
     justifyContent: "center",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  infoContainer: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  info: {
+    fontSize: 20,
+    textAlign: "center",
+    margin: 10,
+    marginBottom: 20,
   },
   bottomButtContainer: {
     width: "100%",
