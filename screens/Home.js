@@ -10,7 +10,6 @@ const HomeScreen = ({ navigation }) => {
   const [zipCode, setZipCode] = useState("");
   const [places, setPlaces] = useState([]);
   const { toggleSelectedCuisines, toggleSelectedStars, toggleSelectedPrice, showRange, selectedStars } = useContext(AppContext);
-=======
 
   const handleNavigate = () => {
     navigation.navigate('RestaurantQuickView');
