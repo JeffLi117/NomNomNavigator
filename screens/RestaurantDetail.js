@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   directions: {
-    backgroundColor: "#302b27",
+    backgroundColor: "#d5bdaf",
     borderRadius: 10,
     padding: 10,
     margin: 5,
