@@ -15,6 +15,7 @@ const AppProvider = ({ children }) => {
     {"text": "$$$$$", priceLevel: 4, "toggle": 0},
   ]);
   const [showRange, setShowRange] = useState([]);
+  const [selectedCuisine, setSelectedCuisine] = useState("")
   // handleSetLocation makes location an object; ex:
   // {
   //   latitude: someNum,
@@ -26,8 +27,10 @@ const AppProvider = ({ children }) => {
   const toggleSelectedCuisines = (objKey) => {
     if (selectedCuisines[objKey] === 0) {
         setSelectedCuisines({...selectedCuisines, [objKey]: 1});
+        setSelectedCuisine(objKey)
     } else {
         setSelectedCuisines({...selectedCuisines, [objKey]: 0});
+        setSelectedCuisine("")
     }
   };
   
@@ -92,7 +95,7 @@ const AppProvider = ({ children }) => {
   }, [showRange])
 
   return (
-    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg, showRange }}>
+    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg, showRange, selectedCuisine }}>
       {children}
     </AppContext.Provider>
   );

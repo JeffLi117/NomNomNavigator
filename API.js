@@ -21,11 +21,19 @@ const handleGeocoding = async (zipCode) => {
   }
 };
 
-const handleNearbySearch = async (latitude, longitude, radius = 24000, type = 'restaurant') => {
+const handleNearbySearch = async (latitude, longitude, keyword = "", radius = 24000, type = 'restaurant') => {
   try {
-    const nearbySearchResponse = await axios.get(
-      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${API_KEY}`
-    );
+    let nearbySearchResponse;
+    if (keyword === "") {
+      nearbySearchResponse = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&type=${type}&key=${API_KEY}`
+      );
+    } else {
+      nearbySearchResponse = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=40.6924765,-73.9908756&radius=24000&keyword=${keyword}&type=restaurant&key=${API_KEY}`
+      );
+    }
+
 
     const { data } = nearbySearchResponse;
     return data.results;

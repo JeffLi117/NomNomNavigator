@@ -9,12 +9,11 @@ import GetExpoLocation from '../components/GetExpoLocation';
 const HomeScreen = ({ navigation }) => {
   const [zipCode, setZipCode] = useState("");
   const [places, setPlaces] = useState([]);
-  const { toggleSelectedCuisines, toggleSelectedStars, toggleSelectedPrice, showRange, selectedStars } = useContext(AppContext);
+  const { toggleSelectedCuisines, toggleSelectedStars, toggleSelectedPrice, showRange, selectedStars, selectedCuisine } = useContext(AppContext);
 
   const handleNavigate = () => {
     navigation.navigate('RestaurantQuickView');
   };
-
   
   const filterByPrice = (resultArr) => {
     return resultArr.filter((result) => {
@@ -35,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
 
         if (coordinates) {
           const { latitude, longitude } = coordinates;
-          const nearbyPlaces = await handleNearbySearch(latitude, longitude);
+          const nearbyPlaces = await handleNearbySearch(latitude, longitude, selectedCuisine);
           let filtered;
           let filtersRun = false;
           console.log("filtersRun before all the if's ", filtersRun);
@@ -110,9 +109,11 @@ const HomeScreen = ({ navigation }) => {
 
   const handleZipCodeSubmit = async (zip) => {
     // Handle the submitted zip code, e.g., show an alert
+    console.log(selectedCuisine)
     setPlaces([]);
     setZipCode(zip);
     fetchCoordinates();
+
   };
 
   return (
