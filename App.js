@@ -30,12 +30,6 @@ export default function App() {
       </NavigationContainer>
     </AppProvider>
   );
-  //  return (
-  //    <View style={styles.container}>
-  //      <Text>HELLO WORLD!</Text>
-  //      <StatusBar style="auto" />
-  //    </View>
-  //  );
 }
 
 const styles = StyleSheet.create({
