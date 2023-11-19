@@ -30,14 +30,14 @@ const RestaurantDetailScreen = ({ navigation }) => {
           <CarouselCards />
         </SafeAreaView>
 
-        <View style={styles.iconContainer}>
+        {/* <View style={styles.iconContainer}>
           <Icon
             name="star"
             onPress={changeColor}
             style={{ color: iconColor.color }}
             size={25}
           />
-        </View>
+        </View> */}
         <Text style={styles.title}>Restaurant Title</Text>
         <View style={styles.detailsContainer}>
           <Text style={styles.info}>restaurantDetails.address</Text>
@@ -54,7 +54,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
         >
           <Text styles={styles.text}>Get Directions</Text>
         </TouchableOpacity>
-        <Text onPress={() => navigation.goBack()}>Skip</Text>
+        <Text onPress={() => navigation.goBack()}>New Restaurant</Text>
       </View>
     </ScrollView>
   );
