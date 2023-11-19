@@ -80,8 +80,10 @@ const AppProvider = ({ children }) => {
       let min = Math.min(...minMaxArr);
       let max = Math.max(...minMaxArr);
       setShowRange([min, max]);
+    } else if (minMaxArr.length === 1) {
+      setShowRange([minMaxArr[0], minMaxArr[0]]);
     } else {
-      setShowRange([]);
+      setShowRange([])
     }
   }, [selectedPrice])
   
