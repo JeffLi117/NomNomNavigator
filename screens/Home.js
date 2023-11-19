@@ -1,30 +1,143 @@
-import React, { useContext } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, Text, Button, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import FilterPicker from '../components/FilterPicker';
+import ZipCodeForm from '../components/ZipCodeForm'
+import { handleGeocoding, handleNearbySearch } from '../API';
+import GetExpoLocation from '../components/GetExpoLocation';
 
 const HomeScreen = ({ navigation }) => {
-  const { toggleSelectedCuisines, toggleSelectedStars, toggleSelectedPrice } = useContext(AppContext);
+  const [zipCode, setZipCode] = useState("");
+  const [places, setPlaces] = useState([]);
+  const { toggleSelectedCuisines, toggleSelectedStars, toggleSelectedPrice, showRange, selectedStars } = useContext(AppContext);
 
   const handleNavigate = () => {
     navigation.navigate('RestaurantQuickView');
   };
 
+  
+  const filterByPrice = (resultArr) => {
+    return resultArr.filter((result) => {
+      return result.price_level >= showRange[0] && result.price_level <= showRange[1];
+    });
+  }
+  
+  const filterByStars = (resultArr) => {
+    return resultArr.filter((result) => {
+      return result.rating >= selectedStars;
+    });
+  }
+
+  const fetchCoordinates = async () => {
+    try {
+      if (zipCode !== "") {
+      const coordinates = await handleGeocoding(zipCode);
+
+        if (coordinates) {
+          const { latitude, longitude } = coordinates;
+          const nearbyPlaces = await handleNearbySearch(latitude, longitude);
+          let filtered;
+          let filtersRun = false;
+          console.log("filtersRun before all the if's ", filtersRun);
+          if (showRange.length === 2) {
+            filtered = filterByPrice(nearbyPlaces);
+            filtersRun = true;
+          } 
+          if (selectedStars) {
+            // nearbyPlaces has already been filtered by price, thus filtered array is not null
+            if (filtersRun) {
+              filtered = filterByStars(filtered);
+            } else {
+              filtered = filterByStars(nearbyPlaces);
+              filtersRun = true;
+            }
+          }
+          if (filtersRun) {
+            setPlaces(filtered); 
+            console.log("# of filtered results is ", filtered.length);
+          }
+          else {
+            setPlaces(nearbyPlaces);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  // useEffect(() => {
+  //   const fetchCoordinates = async () => {
+  //     try {
+  //       if (zipCode !== "") {
+  //       const coordinates = await handleGeocoding(zipCode);
+
+  //         if (coordinates) {
+  //           const { latitude, longitude } = coordinates;
+  //           const nearbyPlaces = await handleNearbySearch(latitude, longitude);
+  //           let filtered;
+  //           let filtersRun = false;
+  //           console.log("filtersRun before all the if's ", filtersRun);
+  //           if (showRange.length === 2) {
+  //             filtered = filterByPrice(nearbyPlaces);
+  //             filtersRun = true;
+  //           } 
+  //           if (selectedStars) {
+  //             // nearbyPlaces has already been filtered by price, thus filtered array is not null
+  //             if (filtersRun) {
+  //               filtered = filterByStars(filtered);
+  //             } else {
+  //               filtered = filterByStars(nearbyPlaces);
+  //               filtersRun = true;
+  //             }
+  //           }
+  //           if (filtersRun) {
+  //             setPlaces(filtered); 
+  //             console.log("# of filtered results is ", filtered.length);
+  //           }
+  //           else {
+  //             setPlaces(nearbyPlaces);
+  //           }
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
+
+  //   fetchCoordinates();
+  // }, [zipCode]);
+
+  const handleZipCodeSubmit = async (zip) => {
+    // Handle the submitted zip code, e.g., show an alert
+    setPlaces([]);
+    setZipCode(zip);
+    fetchCoordinates();
+  };
+
   return (
-    <View>
-      <Text>Home Screen</Text>
-      <FilterPicker />
-      <TouchableOpacity
-        style={styles.findButton}
-        onPress={handleNavigate}
-      >
-        <Text style={styles.buttonText}>Go to RestaurantQuickView (Find)</Text>
-      </TouchableOpacity>
-      <Button
-        title="Go to MapScreen"
-        onPress={() => navigation.navigate('MapScreen')}
-      />
-    </View>
+    <ScrollView>
+      <View>
+        <Text>Home Screen</Text>
+        <GetExpoLocation />
+        <FilterPicker />
+        <ZipCodeForm onSubmit={handleZipCodeSubmit} />
+        <TouchableOpacity
+          style={styles.findButton}
+          onPress={handleNavigate}
+        >
+          <Text style={styles.buttonText}>Go to RestaurantQuickView (Find)</Text>
+        </TouchableOpacity>
+        <Button
+          title="Go to MapScreen"
+          onPress={() => navigation.navigate('MapScreen')}
+        />
+        <Text>Nearby Places:</Text>
+        {places.map((place) => (
+          <Text key={place.place_id}>{place.name}</Text>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 

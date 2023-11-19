@@ -7,8 +7,11 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  SafeAreaView
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import CarouselCards from '../components/CarouselCards.js'
+
 
 const RestaurantDetailScreen = ({ navigation }) => {
   const [iconState, setIconState] = useState({
@@ -22,13 +25,9 @@ const RestaurantDetailScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={{
-          uri: "https://img.freepik.com/free-photo/macaroni-noodles-with-meat-tomato-sauce-served-plate-table_1220-6904.jpg",
-          //this is a filler image that can be replaced by a call later on
-        }}
-      />
+      <SafeAreaView style={styles.carousel}>
+        <CarouselCards />
+      </SafeAreaView>
       <View style={styles.likeContainer}>
         <Icon
           name="star"
@@ -38,6 +37,8 @@ const RestaurantDetailScreen = ({ navigation }) => {
         />
       </View>
       <Text style={styles.title}>restaurant.name</Text>
+       
+      <Text style={styles.title}>Restaurant Title</Text>
       <View style={styles.detailsContainer}>
         <Text style={styles.info}>restaurant.address</Text>
         <Text style={styles.info}>restaurant.rating</Text>
@@ -103,6 +104,13 @@ const styles = StyleSheet.create({
     marginTop: "60%",
     position: "absolute",
   },
+  carousel: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 50
+  },
 });
+
 
 export default RestaurantDetailScreen;

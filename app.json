@@ -1,5 +1,13 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow NomNomNavigator to use your location."
+        }
+      ]
+    ],
     "name": "NomNomNavigator",
     "slug": "NomNomNavigator",
     "version": "1.0.0",
