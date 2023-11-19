@@ -3,12 +3,12 @@ import {
   ScrollView,
   View,
   Text,
-  Button,
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import CarouselCards from "../components/CarouselCards.js";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const RestaurantQuickViewScreen = ({ navigation }) => {
   return (
@@ -21,6 +21,13 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
         <View style={styles.infoContainer}>
           <Text style={styles.info}>Cuisine</Text>
           <Text style={styles.info}>$$</Text>
+        </View>
+        <View style={styles.iconContainer}>
+          <Icon name="star" style={styles.icon} size={25} />
+          <Icon name="star" style={styles.icon} size={25} />
+          <Icon name="star" style={styles.icon} size={25} />
+          <Icon name="star" style={styles.icon} size={25} />
+          <Icon name="star" style={styles.icon} size={25} />
         </View>
 
         <View style={styles.bottomButtContainer}>
@@ -70,6 +77,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
     margin: 10,
     marginBottom: 20,
+  },
+  iconContainer: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  icon: {
+    color: "black",
+    // color changes to #f18f01 dependent on rating
+    margin: 5,
   },
   bottomButtContainer: {
     width: "100%",
