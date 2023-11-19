@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#f2e5d7",
     paddingBottom: 20,
+    height: "100vh",
   },
   carousel: {
     height: 450,
