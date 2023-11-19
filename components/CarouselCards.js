@@ -1,9 +1,8 @@
-import React from 'react';
+import React from "react";
 import { View } from "react-native";
-import Carousel, { Pagination } from 'react-native-snap-carousel';
-import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from './CarouselCardItem';
-import data from '../data';
-
+import Carousel, { Pagination } from "react-native-snap-carousel";
+import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from "./CarouselCardItem";
+import data from "../data";
 
 const CarouselCards = () => {
   const isCarousel = React.useRef(null);
@@ -31,7 +30,7 @@ const CarouselCards = () => {
           height: 10,
           borderRadius: 5,
           marginHorizontal: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.92)'
+          backgroundColor: "rgba(0, 0, 0, 0.92)",
         }}
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}
