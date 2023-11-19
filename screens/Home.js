@@ -10,7 +10,7 @@ import GetExpoLocation from '../components/GetExpoLocation';
 const HomeScreen = ({ navigation }) => {
   const[zipCode, setZipCode] = useState("");
   const [places, setPlaces] = useState([]);
-  const { toggleSelectedCuisines, toggleSelectedStars, toggleSelectedPrice } = useContext(AppContext);
+  const { toggleSelectedCuisines, toggleSelectedStars} = useContext(AppContext);
 
   const handleNavigate = () => {
     navigation.navigate('RestaurantQuickView');
