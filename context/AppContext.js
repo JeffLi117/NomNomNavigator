@@ -18,11 +18,11 @@ const AppProvider = ({ children }) => {
         setSelectedCuisines({...selectedCuisines, [objKey]: 0});
     }
   };
-  
+
   const toggleSelectedStars = (num) => {
     setSelectedStars(num);
   };
-  
+
   const toggleSelectedPrice = (objKey) => {
     if (selectedPrice[objKey] === 0) {
         setSelectedPrice({...selectedPrice, [objKey]: 1});
@@ -30,7 +30,7 @@ const AppProvider = ({ children }) => {
         setSelectedPrice({...selectedPrice, [objKey]: 0});
     }
   };
-  
+
   useEffect(() => {
     console.log("new selectedStars is ", selectedStars)
   }, [selectedStars])

@@ -36,3 +36,4 @@ const handleNearbySearch = async (latitude, longitude, radius = 24000, type = 'r
 };
 
 export { handleGeocoding, handleNearbySearch };
+

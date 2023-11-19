@@ -13,8 +13,9 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
+
     <AppProvider>
-      <NavigationContainer>
+      <NavigationContainer >
         <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="RestaurantQuickView" component={RestaurantQuickViewScreen} />
@@ -23,6 +24,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
+
   );
 //  return (
 //    <View style={styles.container}>

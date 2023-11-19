@@ -7,8 +7,8 @@ const FilterPicker = ({ navigation }) => {
   const arrOfNums = [1, 2, 3, 4, 5];
 
   return (
-    <View>
-        <Text>Select the cuisines you're craving!</Text>
+    <View style={styles.container}>
+        <Text style={styles.text}>1. Select the cuisines you're craving!</Text>
         {Object.keys(selectedCuisines).map((key) => {
             return (
             <TouchableOpacity
@@ -22,7 +22,7 @@ const FilterPicker = ({ navigation }) => {
             </TouchableOpacity>
             );
         })}
-        <Text>What's the minimum star rating you want?</Text>
+        <Text style={styles.text}>2. What's the minimum star rating you want?</Text>
         {arrOfNums.map((num) => {
             return (
             <TouchableOpacity
@@ -36,7 +36,7 @@ const FilterPicker = ({ navigation }) => {
             </TouchableOpacity>
             );
         })}
-        <Text>What's your price range?</Text>
+        <Text style={styles.text}>3. What's your price range?</Text>
         {Object.keys(selectedPrice).map((key) => {
             return (
             <TouchableOpacity
@@ -58,14 +58,32 @@ export default FilterPicker;
 
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'left',
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderRadius: 15
+      },
+    text:{
+        color: '#fff',
+        fontFamily: 'Roboto',
+        fontSize: 16,
+        backgroundColor:'#006400',
+    },
     regularBtn: {
-      backgroundColor: 'blue', 
+        backgroundColor: 'transparent',
     },
     selectedBtn: {
-      backgroundColor: 'green', 
+      backgroundColor: 'rgba(0, 100, 0, 0.5)',
     },
     buttonText: {
-      textAlign: 'center',
-      color: 'white',
-    },
+        textAlign: 'center',
+        color: '#fff',
+        fontSize: 15,
+        textTransform: 'uppercase',
+        textShadowColor: 'rgba(0, 0, 0, 0.2)',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 2,
+    }
   });
