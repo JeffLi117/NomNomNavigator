@@ -51,8 +51,16 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
     }
   }, [currentPlaceView.photos]);
 
+  const renderDollarSigns = (price_level) => {
+    let dollarSigns = "";
+    for (let i = 0; i < price_level; i++) {
+      dollarSigns += "$";
+    }
+    return dollarSigns;
+  };
+
   return (
-    <ScrollView>
+    <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
         {imageURL ? (
           <TouchableOpacity style={styles.imageContainer}>
@@ -65,22 +73,19 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
           <Text>Loading...</Text>
         )}
         <Text style={styles.title}>{currentPlaceView.name}</Text>
-        <View style={styles.infoContainer}>
-          {selectedCuisines && (
-            <Text style={styles.info}>{selectedCuisines}</Text>
-          )}
-          <Text style={styles.info}>Rating: {currentPlaceView.rating}</Text>
-          <Text style={styles.info}>
-            Price level: {currentPlaceView.price_level}
-          </Text>
-        </View>
-        <View style={styles.iconContainer}>
-          <Icon name="star" style={styles.icon} size={25} />
-          <Icon name="star" style={styles.icon} size={25} />
-          <Icon name="star" style={styles.icon} size={25} />
-          <Icon name="star" style={styles.icon} size={25} />
-          <Icon name="star" style={styles.icon} size={25} />
-        </View>
+         <View style={styles.infoContainer}>
+            <View style={styles.pill}>
+              <Icon name="star" style={{ color: "#f18f01" }} size={20} />
+              <Text>
+                {"    "}
+                {currentPlaceView.rating}
+              </Text>
+            </View>
+
+            {currentPlaceView.price_level && <Text style={styles.pill}>
+              {renderDollarSigns(currentPlaceView.price_level)}
+            </Text>}
+          </View>
 
         <View style={styles.bottomButtonContainer}>
           <TouchableOpacity
@@ -100,16 +105,22 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  scrollContainer : {
+    height: '100%',
+    backgroundColor: "#f2e5d7"
+  },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#f2e5d7",
     paddingBottom: 50,
+    height: '100%'
   },
   carousel: {
     height: 450,
     marginTop: 20,
+    marginBottom: 20,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -121,7 +132,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    margin: 10,
+    margin: 50,
   },
   infoContainer: {
     width: "100%",
@@ -135,6 +146,20 @@ const styles = StyleSheet.create({
     textAlign: "center",
     margin: 10,
     marginBottom: 20,
+  },
+  pill: {
+    backgroundColor: "#d5bdaf",
+    borderRadius: 50,
+    margin: 5,
+    marginTop: 30,
+    marginBottom: 50,
+    textAlign: "center",
+    paddingTop: 15,
+    width: 100,
+    height: 50,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
   },
   iconContainer: {
     flexDirection: "row",

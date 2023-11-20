@@ -167,7 +167,6 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 200,
-    marginBottom: 20,
   },
   detailsContainer: {
     margin: 20,
@@ -181,7 +180,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
   },
   info: {
     fontSize: 20,
