@@ -88,6 +88,10 @@ const HomeScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    fetchCoordinates();
+  }, [zipCode]);
+
+  useEffect(() => {
     console.log("copiedList changed");
     if (copiedList.length > 0 && places.length > 0) {
       navigation.navigate("RestaurantQuickView");
@@ -98,7 +102,6 @@ const HomeScreen = ({ navigation }) => {
     // Handle the submitted zip code, e.g., show an alert
     setPlaces([]);
     setZipCode(zip);
-    fetchCoordinates();
   };
 
   return (
