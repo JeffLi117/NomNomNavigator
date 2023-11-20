@@ -11,9 +11,42 @@ import {
 } from "react-native";
 import CarouselCards from "../components/CarouselCards.js";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { AppContext } from '../context/AppContext.js';
+import { handlePlaceDetailQuery } from '../API';
 
 const RestaurantDetailScreen = ({ navigation }) => {
+  const { setCopiedList, selectedCuisines, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList } = useContext(AppContext);
+  const [restaurantDetails, setRestaurantDetails] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchRestaurantDetails() {
+      try {
+        if (currentPlaceId) {
+          // Set loading state to true before making the API call
+          setIsLoading(true);
+
+          // Make the API call and wait for the response
+          const data = await handlePlaceDetailQuery(currentPlaceId);
+
+          // Update restaurantDetails with the fetched data
+          setRestaurantDetails(data);
+        }
+      } catch (error) {
+        // Handle errors, if any, and log the details
+        console.error("Error fetching restaurant details:", error);
+      } finally {
+        // Set loading state to false after the API call is completed (success or error)
+        setIsLoading(false);
+      }
+    }
+
+    // Call the fetchRestaurantDetails function when currentPlaceId changes
+    fetchRestaurantDetails();
+  }, [currentPlaceId]);
+
+
   const [iconColor, setIconColor] = useState({
     color: "black",
     pressed: false,
@@ -23,11 +56,32 @@ const RestaurantDetailScreen = ({ navigation }) => {
     setIconColor({ color: "#f18f01", pressed: true });
   };
 
+  const handleNextRestaurant = () => {
+    handleDeleteFromList()
+    navigation.navigate("RestaurantQuickView");
+  }
+
+  const renderDollarSigns = (price_level) => {
+    let dollarSigns = ""
+    for (let i = 0; i < price_level; i++) {
+      dollarSigns += "$"
+    }
+    return dollarSigns
+  }
+
+  if (isLoading) {
+    return (
+      <View>
+        <Text> Loading... </Text>
+      </View>
+    )
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <SafeAreaView style={styles.carousel}>
-          <CarouselCards />
+          <CarouselCards photoData={restaurantDetails.photos} />
         </SafeAreaView>
 
         {/* <View style={styles.iconContainer}>
@@ -38,12 +92,21 @@ const RestaurantDetailScreen = ({ navigation }) => {
             size={25}
           />
         </View> */}
-        <Text style={styles.title}>Restaurant Title</Text>
+        <Text style={styles.title}>{restaurantDetails.name}</Text>
         <View style={styles.detailsContainer}>
-          <Text style={styles.info}>restaurantDetails.address</Text>
-          <Text style={styles.info}>restaurantDetails.rating</Text>
-          <Text style={styles.info}>restaurantDetails.menu</Text>
-          <Text style={styles.info}>$$</Text>
+          <Text style={styles.info}>{restaurantDetails.formatted_address}</Text>
+
+          <Text style={styles.info}>
+            <Icon
+              name="star"
+              onPress={changeColor}
+              style={{ color: iconColor.color }}
+              size={25}
+            />
+            {restaurantDetails.rating}
+          </Text>
+          <Text style={styles.info}>{renderDollarSigns(restaurantDetails.price_level)}</Text>
+          <Text style={styles.info}>restaurantDetails.reviews</Text>
           {/* Other restaurant details */}
         </View>
         <TouchableOpacity
@@ -54,7 +117,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
         >
           <Text styles={styles.text}>Get Directions</Text>
         </TouchableOpacity>
-        <Text onPress={() => navigation.goBack()}>New Restaurant</Text>
+        <Text onPress={handleNextRestaurant}>New Restaurant</Text>
       </View>
     </ScrollView>
   );

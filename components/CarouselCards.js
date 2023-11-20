@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import { View } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from "./CarouselCardItem";
+import { getDetailPhotos } from '../API.js';
+
 import data from "../data";
 
-const CarouselCards = () => {
+const CarouselCards = ({ photoData }) => {
   const isCarousel = React.useRef(null);
   const [index, setIndex] = React.useState(0);
+  const [photoURls, setPhotoURLs] = useState([])
+
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      const photo_references = []
+      for (let i = 0; i < photoData.length; i++) {
+        photo_references.push(photoData[i].photo_reference);
+      }
+
+      let newPhotoURLs = await getDetailPhotos(photo_references);
+      setPhotoURLs(newPhotoURLs)
+    }
+    fetchPhotos()
+  }, [])
 
   return (
     <View>
@@ -14,7 +30,7 @@ const CarouselCards = () => {
         layout="tinder"
         layoutCardOffset={9}
         ref={isCarousel}
-        data={data}
+        data={photoURls}
         renderItem={CarouselCardItem}
         sliderWidth={SLIDER_WIDTH}
         itemWidth={ITEM_WIDTH}
@@ -22,7 +38,7 @@ const CarouselCards = () => {
         useScrollView={true}
       />
       <Pagination
-        dotsLength={data.length}
+        dotsLength={photoURls.length}
         activeDotIndex={index}
         carouselRef={isCarousel}
         dotStyle={{
