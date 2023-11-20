@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -6,20 +6,21 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import { AppContext } from "../context/AppContext";
 
-const ZipCodeForm = ({ onSubmit }) => {
-  const [zipCode, setZipCode] = useState("");
+const ZipCodeForm = () => {
+  const { zipCode, handleZipCode } = useContext(AppContext);
 
   const handleInputChange = (text) => {
-    setZipCode(text);
+    handleZipCode(text);
   };
 
-  const handleSubmit = () => {
-    // You can add validation or additional logic here before submitting
-    if (zipCode.length === 5) {
-      onSubmit(zipCode);
-    }
-  };
+  // const handleSubmit = () => {
+  //   // You can add validation or additional logic here before submitting
+  //   if (zipCode.length === 5) {
+  //     onSubmit(zipCode);
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
@@ -31,9 +32,9 @@ const ZipCodeForm = ({ onSubmit }) => {
         onChangeText={handleInputChange}
         value={zipCode}
       />
-      <TouchableOpacity onPress={handleSubmit} style={styles.submitBtn}>
+      {/* <TouchableOpacity onPress={handleSubmit} style={styles.submitBtn}>
         <Text style={styles.text}>Submit</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
@@ -41,6 +42,7 @@ const ZipCodeForm = ({ onSubmit }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    paddingTop: 0,
   },
   label: {
     fontSize: 16,

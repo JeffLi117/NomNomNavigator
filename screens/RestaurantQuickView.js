@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
   ScrollView,
   View,
@@ -11,17 +11,24 @@ import {
 } from "react-native";
 import CarouselCards from "../components/CarouselCards.js";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { AppContext } from '../context/AppContext.js';
-import { getNearbyPhoto } from '../API.js';
+import { AppContext } from "../context/AppContext.js";
+import { getNearbyPhoto } from "../API.js";
 
 const RestaurantQuickViewScreen = ({ navigation }) => {
-  const { setCopiedList, selectedCuisines, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList } = useContext(AppContext);
+  const {
+    setCopiedList,
+    selectedCuisines,
+    copiedList,
+    currentPlaceId,
+    currentPlaceView,
+    handleDeleteFromList,
+  } = useContext(AppContext);
   console.log(copiedList.length);
   const [photoData, setPhotoData] = useState(null);
   const handleNext = () => {
     handleDeleteFromList();
-    navigation.navigate("RestaurantQuickView");
-  }
+    navigation.navigate("Restaurant Quick View");
+  };
 
   // const singleImg = getNearbyPhoto(currentPlaceView.photos[0].photo_reference);
   let contentType;
@@ -34,31 +41,38 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
       const photo_reference = currentPlaceView.photos[0].photo_reference;
 
       getNearbyPhoto(photo_reference)
-        .then(data => {
+        .then((data) => {
           setImageURL(data.config.url);
         })
-        .catch(error => {
+        .catch((error) => {
           // Handle error if necessary
-          console.error('Error fetching nearby photo:', error);
+          console.error("Error fetching nearby photo:", error);
         });
     }
-  }, [currentPlaceView.photos]); 
+  }, [currentPlaceView.photos]);
 
   return (
     <ScrollView>
       <View style={styles.container}>
         {imageURL ? (
           <TouchableOpacity style={styles.imageContainer}>
-            <Image source={{ uri: `${imageURL}` }} style={{ width: 220, aspectRatio: 1 }} />
+            <Image
+              source={{ uri: `${imageURL}` }}
+              style={{ width: 220, aspectRatio: 1 }}
+            />
           </TouchableOpacity>
         ) : (
           <Text>Loading...</Text>
         )}
         <Text style={styles.title}>{currentPlaceView.name}</Text>
         <View style={styles.infoContainer}>
-          {selectedCuisines && <Text style={styles.info}>{selectedCuisines}</Text>}
+          {selectedCuisines && (
+            <Text style={styles.info}>{selectedCuisines}</Text>
+          )}
           <Text style={styles.info}>Rating: {currentPlaceView.rating}</Text>
-          <Text style={styles.info}>Price level: {currentPlaceView.price_level}</Text>
+          <Text style={styles.info}>
+            Price level: {currentPlaceView.price_level}
+          </Text>
         </View>
         <View style={styles.iconContainer}>
           <Icon name="star" style={styles.icon} size={25} />
@@ -70,7 +84,7 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
 
         <View style={styles.bottomButtonContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("RestaurantDetail")}
+            onPress={() => navigation.navigate("Restaurant Details")}
             style={styles.bottomButton}
           >
             <Text>More Details</Text>
@@ -80,6 +94,11 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
             <Text>Next Restaurant</Text>
           </TouchableOpacity>
         </View>
+        <Button
+          title="Go to RestaurantReview"
+          onPress={() => navigation.navigate("RestaurantReview")}
+        />
+
       </View>
     </ScrollView>
   );
@@ -104,9 +123,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   imageContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     margin: 10,
   },
   infoContainer: {

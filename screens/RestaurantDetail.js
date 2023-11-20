@@ -65,9 +65,10 @@ const RestaurantDetailScreen = ({ navigation }) => {
   };
 
   const handleNextRestaurant = () => {
-    handleDeleteFromList();
-    navigation.navigate("RestaurantQuickView");
-  };
+
+    handleDeleteFromList()
+    navigation.navigate("Restaurant Quick View");
+  }
 
   const renderDollarSigns = (price_level) => {
     let dollarSigns = "";
