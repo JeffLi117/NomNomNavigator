@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   regularBtn: {
-    backgroundColor: "#d5bdaf",
+    backgroundColor: "#c9a895",
     borderRadius: 10,
     padding: 10,
     margin: 5,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   smallRegularBtn: {
-    backgroundColor: "#d5bdaf",
+    backgroundColor: "#c9a895",
     borderRadius: 10,
     padding: 10,
     margin: 5,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     margin: 5,
-    width: 100,
+    width: "18%",
   },
   buttonText: {
     textAlign: "center",
