@@ -6,7 +6,7 @@ import uuid from 'react-native-uuid';
 
 const RestaurantReview = () => {
   const [restaurantData, setRestaurantData] = useState([]);
-  const [restaurantReviewData, setRestaurantReviewData] = useState([]); //the data is a array of objects
+  const [restaurantReviewData, setRestaurantReviewData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +20,7 @@ const RestaurantReview = () => {
 
     fetchData();
   }, []);
-  // console.log("Type of restaurantData.results:", Array.isArray(restaurantData.results))
+
   const extractPlaceIds = (data) => {
     const placeIds = [];
     if (Array.isArray(data)) {
@@ -54,8 +54,6 @@ const RestaurantReview = () => {
 
     fetchReviewData();
   }, [placeIdsArray]);
-
-  //  console.log("===============", restaurantReviewData)
 
  return (
   <View>
