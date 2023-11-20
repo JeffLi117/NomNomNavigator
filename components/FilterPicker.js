@@ -18,36 +18,39 @@ const FilterPicker = ({ navigation }) => {
     "italian",
     "american",
     "breakfast",
+    "brunch",
     "diner",
     "fast food",
   ];
 
   return (
     <View>
-      <Text style={styles.text}>Select the cuisines you're craving!</Text>
-      {arrOfCuisines.map((sel) => {
-        return (
-          <TouchableOpacity
-            key={sel}
-            style={
-              selectedCuisines === sel ? styles.selectedBtn : styles.regularBtn
-            }
-            onPress={() => {
-              toggleSelectedCuisines(sel);
-            }}
-          >
-            <Text
-              style={
-                selectedCuisines === sel
-                  ? styles.selectedText
-                  : styles.buttonText
-              }
+      <Text style={styles.topText}>Select the cuisines you're craving!</Text>
+      <View>
+        {arrOfCuisines.map((sel) => {
+            return (
+            <TouchableOpacity
+                key={sel}
+                style={
+                selectedCuisines === sel ? styles.selectedBtn : styles.regularBtn
+                }
+                onPress={() => {
+                toggleSelectedCuisines(sel);
+                }}
             >
-              {sel}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
+                <Text
+                style={
+                    selectedCuisines === sel
+                    ? styles.selectedTextCuisine
+                    : styles.buttonTextCuisine
+                }
+                >
+                {sel}
+                </Text>
+            </TouchableOpacity>
+            );
+        })}
+      </View>
       <Text style={styles.text}>What's the minimum star rating you want?</Text>
       <View style={styles.container}>
         {arrOfNums.map((num) => {
@@ -147,11 +150,26 @@ const styles = StyleSheet.create({
     width: "18%",
   },
   buttonText: {
+    fontSize: 12,
     textAlign: "center",
   },
   selectedText: {
+    fontSize: 12,
     textAlign: "center",
     color: "white",
+  },
+  buttonTextCuisine: {
+    fontSize: 12,
+    textAlign: "center",
+    width: "fit-content",
+    margin: 5,
+  },
+  selectedTextCuisine: {
+    fontSize: 12,
+    textAlign: "center",
+    color: "white",
+    width: "fit-content",
+    margin: 5,
   },
   priceRange: {
     display: "flex",
@@ -163,4 +181,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingTop: 20,
   },
+  topText: {
+    textAlign: "center",
+    paddingTop: 0,
+  }
 });
