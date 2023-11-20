@@ -80,7 +80,7 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (copiedList.length > 0 && places.length > 0) {
-      navigation.navigate("RestaurantQuickView");
+      navigation.navigate("Restaurant Quick View");
     }
   }, [copiedList]);
 
@@ -113,6 +113,9 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+  },
   findButton: {
     backgroundColor: "black",
   },

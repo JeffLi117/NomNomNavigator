@@ -60,7 +60,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
 
   const handleNextRestaurant = () => {
     handleDeleteFromList()
-    navigation.navigate("RestaurantQuickView");
+    navigation.navigate("Restaurant Quick View");
   }
 
   const renderDollarSigns = (price_level) => {
