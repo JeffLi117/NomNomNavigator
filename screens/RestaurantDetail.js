@@ -14,13 +14,13 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { useState, useContext, useEffect } from "react";
 import { AppContext } from '../context/AppContext.js';
 import { handlePlaceDetailQuery } from '../API';
-import RestaurantReviews from '../components/RestaurantReviews.js'
+import RestaurantReviews from '../components/RestaurantReviews.js';
 
 const RestaurantDetailScreen = ({ navigation }) => {
   const { setCopiedList, selectedCuisines, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList } = useContext(AppContext);
-  const [restaurantDetails, setRestaurantDetails] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [showReviews, setShowReviews] = useState(false)
+  const [restaurantDetails, setRestaurantDetails] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showReviews, setShowReviews] = useState(false);
 
   useEffect(() => {
     async function fetchRestaurantDetails() {
@@ -59,24 +59,24 @@ const RestaurantDetailScreen = ({ navigation }) => {
   };
 
   const handleNextRestaurant = () => {
-    handleDeleteFromList()
+    handleDeleteFromList();
     navigation.navigate("RestaurantQuickView");
-  }
+  };
 
   const renderDollarSigns = (price_level) => {
-    let dollarSigns = ""
+    let dollarSigns = "";
     for (let i = 0; i < price_level; i++) {
-      dollarSigns += "$"
+      dollarSigns += "$";
     }
-    return dollarSigns
-  }
+    return dollarSigns;
+  };
 
   if (isLoading) {
     return (
       <View>
         <Text> Loading... </Text>
       </View>
-    )
+    );
   }
 
   if (showReviews) {
@@ -86,12 +86,9 @@ const RestaurantDetailScreen = ({ navigation }) => {
           <TouchableOpacity
             style={[styles.directions, styles.closeButton]}
             onPress={() => {
-              setShowReviews(false)
+              setShowReviews(false);
             }}
           >
-
-
-
             <Text styles={styles.text}> X </Text>
           </TouchableOpacity>
           <RestaurantReviews
@@ -100,11 +97,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
           />
         </View>
       </ScrollView>
-
-
-
-
-    )
+    );
   }
 
   return (
@@ -132,7 +125,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.detailButton}
           onPress={() => {
-            setShowReviews(true)
+            setShowReviews(true);
           }}
         >
           <Text styles={styles.detailButton}>Check Reviews</Text>
