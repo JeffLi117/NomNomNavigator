@@ -41,9 +41,9 @@ const FilterPicker = ({ navigation }) => {
         );
       })}
       <Text style={styles.text}>What's the minimum star rating you want?</Text>
-      {arrOfNums.map((num) => {
-        return (
-          <View style={styles.container}>
+      <View style={styles.container}>
+        {arrOfNums.map((num) => {
+          return (
             <TouchableOpacity
               key={num}
               style={
@@ -57,13 +57,13 @@ const FilterPicker = ({ navigation }) => {
             >
               <Text style={styles.buttonText}>{num}</Text>
             </TouchableOpacity>
-          </View>
-        );
-      })}
+          );
+        })}
+      </View>
       <Text style={styles.text}>What's your price range?</Text>
-      {selectedPrice.map((el) => {
-        return (
-          <View style={styles.container}>
+      <View style={styles.container}>
+        {selectedPrice.map((el) => {
+          return (
             <TouchableOpacity
               key={el.priceLevel}
               style={
@@ -77,9 +77,9 @@ const FilterPicker = ({ navigation }) => {
             >
               <Text style={styles.buttonText}>{el.text}</Text>
             </TouchableOpacity>
-          </View>
-        );
-      })}
+          );
+        })}
+      </View>
       {showRange && showRange.length === 2 ? (
         <TouchableOpacity style={styles.priceRange}>
           <Text>Min Price Level: {`${showRange[0]}`}</Text>
@@ -94,10 +94,9 @@ export default FilterPicker;
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-around",
   },
   regularBtn: {
     backgroundColor: "#d5bdaf",
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     margin: 5,
-    width: 100,
+    width: "18%",
   },
   smallSelectedBtn: {
     backgroundColor: "#274690",
