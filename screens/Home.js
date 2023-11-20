@@ -10,19 +10,19 @@ const HomeScreen = ({ navigation }) => {
   const [zipCode, setZipCode] = useState("");
   const [places, setPlaces] = useState([]);
   const { toggleSelectedCuisines, toggleSelectedStars, toggleSelectedPrice, showRange, selectedStars } = useContext(AppContext);
-=======
+
 
   const handleNavigate = () => {
     navigation.navigate('RestaurantQuickView');
   };
 
-  
+
   const filterByPrice = (resultArr) => {
     return resultArr.filter((result) => {
       return result.price_level >= showRange[0] && result.price_level <= showRange[1];
     });
   }
-  
+
   const filterByStars = (resultArr) => {
     return resultArr.filter((result) => {
       return result.rating >= selectedStars;
@@ -43,7 +43,7 @@ const HomeScreen = ({ navigation }) => {
           if (showRange.length === 2) {
             filtered = filterByPrice(nearbyPlaces);
             filtersRun = true;
-          } 
+          }
           if (selectedStars) {
             // nearbyPlaces has already been filtered by price, thus filtered array is not null
             if (filtersRun) {
@@ -54,7 +54,7 @@ const HomeScreen = ({ navigation }) => {
             }
           }
           if (filtersRun) {
-            setPlaces(filtered); 
+            setPlaces(filtered);
             console.log("# of filtered results is ", filtered.length);
           }
           else {
@@ -82,7 +82,7 @@ const HomeScreen = ({ navigation }) => {
   //           if (showRange.length === 2) {
   //             filtered = filterByPrice(nearbyPlaces);
   //             filtersRun = true;
-  //           } 
+  //           }
   //           if (selectedStars) {
   //             // nearbyPlaces has already been filtered by price, thus filtered array is not null
   //             if (filtersRun) {
@@ -93,7 +93,7 @@ const HomeScreen = ({ navigation }) => {
   //             }
   //           }
   //           if (filtersRun) {
-  //             setPlaces(filtered); 
+  //             setPlaces(filtered);
   //             console.log("# of filtered results is ", filtered.length);
   //           }
   //           else {

@@ -5,10 +5,14 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
   return (
     <View>
       <Text>RestaurantQuickView Screen</Text>
-      
+
       <Button
         title="Go to RestaurantDetail"
         onPress={() => navigation.navigate('RestaurantDetail')}
+      />
+      <Button
+        title="Go to RestaurantReview"
+        onPress={() => navigation.navigate('RestaurantReview')}
       />
     </View>
   );

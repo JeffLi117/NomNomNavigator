@@ -8,6 +8,7 @@ import RestaurantDetailScreen from "./screens/RestaurantDetail";
 import RestaurantQuickViewScreen from "./screens/RestaurantQuickView";
 import { AppProvider } from "./context/AppContext";
 import MapScreen from "./screens/MapScreen";
+import RestaurantReview from "./components/RestaurantReviews";
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,10 @@ export default function App() {
           <Stack.Screen
             name="RestaurantDetail"
             component={RestaurantDetailScreen}
+          />
+          <Stack.Screen
+            name="RestaurantReview"
+            component={RestaurantReview}
           />
           <Stack.Screen name="MapScreen" component={MapScreen} />
         </Stack.Navigator>
