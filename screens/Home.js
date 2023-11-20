@@ -14,13 +14,13 @@ const HomeScreen = ({ navigation }) => {
   const handleNavigate = () => {
     navigation.navigate('RestaurantQuickView');
   };
-  
+
   const filterByPrice = (resultArr) => {
     return resultArr.filter((result) => {
       return result.price_level >= showRange[0] && result.price_level <= showRange[1];
     });
   }
-  
+
   const filterByStars = (resultArr) => {
     return resultArr.filter((result) => {
       return result.rating >= selectedStars;
@@ -40,7 +40,7 @@ const HomeScreen = ({ navigation }) => {
           if (showRange.length === 2) {
             filtered = filterByPrice(nearbyPlaces);
             filtersRun = true;
-          } 
+          }
           if (selectedStars) {
             // nearbyPlaces has already been filtered by price, thus filtered array is not null
             if (filtersRun) {
@@ -111,7 +111,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   findButton: {
-    backgroundColor: 'black', 
+    backgroundColor: 'black',
   },
   buttonText: {
     textAlign: 'center',
