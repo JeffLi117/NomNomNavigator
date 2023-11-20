@@ -84,12 +84,15 @@ const RestaurantDetailScreen = ({ navigation }) => {
       <ScrollView>
         <View>
           <TouchableOpacity
-            style={styles.directions}
+            style={[styles.directions, styles.closeButton]}
             onPress={() => {
               setShowReviews(false)
             }}
           >
-            <Text styles={styles.text}>Back to Details</Text>
+
+
+
+            <Text styles={styles.text}> X </Text>
           </TouchableOpacity>
           <RestaurantReviews
             restaurantName={restaurantDetails.name}
@@ -97,6 +100,10 @@ const RestaurantDetailScreen = ({ navigation }) => {
           />
         </View>
       </ScrollView>
+
+
+
+
     )
   }
 
@@ -123,20 +130,20 @@ const RestaurantDetailScreen = ({ navigation }) => {
           <Text style={styles.info}>{renderDollarSigns(restaurantDetails.price_level)}</Text>
         </View>
         <TouchableOpacity
-          style={styles.directions}
+          style={styles.detailButton}
           onPress={() => {
             setShowReviews(true)
           }}
         >
-          <Text styles={styles.text}>Check Reviews</Text>
+          <Text styles={styles.detailButton}>Check Reviews</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.directions}
+          style={styles.detailButton}
           onPress={() => {
             Linking.openURL(`http://maps.google.com/?q=your+query`);
           }}
         >
-          <Text styles={styles.text}>Get Directions</Text>
+          <Text styles={styles.detailButton}>Get Directions</Text>
         </TouchableOpacity>
         <Text onPress={handleNextRestaurant}>New Restaurant</Text>
       </View>
@@ -182,12 +189,35 @@ const styles = StyleSheet.create({
   directions: {
     backgroundColor: "#d5bdaf",
     borderRadius: 10,
-    padding: 10,
     margin: 5,
+    width: 30,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+
   },
   text: {
     color: "white",
+    textAlign: 'center'
   },
+  closeButton: {
+    marginLeft: 'auto',
+    textAlign: 'center'
+  },
+  detailButton: {
+    backgroundColor: "#d5bdaf",
+    borderRadius: 10,
+    margin: 5,
+    width: 120,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    padding: 2
+
+
+  }
 });
 
 export default RestaurantDetailScreen;
