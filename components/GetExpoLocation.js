@@ -1,38 +1,49 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from '../context/AppContext';
-import { Platform, Text, View, StyleSheet } from 'react-native';
+import { Platform, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as Device from 'expo-device';
 import * as Location from 'expo-location';
 
 export default function GetExpoLocation() {
   const { location, handleSetLocation, errorMsg, handleSetErrorMsg } = useContext(AppContext);
+  const [click, setClick] = useState(false);
 
   useEffect(() => {
-    (async () => {
+    if (click) (async () => {
       if (Platform.OS === 'android' && !Device.isDevice) {
         handleSetErrorMsg(
           'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
         );
+        setClick(false);
         return;
       }
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         handleSetErrorMsg('Permission to access location was denied');
+        setClick(false);
         return;
       }
 
       let location = await Location.getCurrentPositionAsync({});
       handleSetLocation(location);
+      setClick(false);
     })();
-  }, []);
+  }, [click]);
 
-  useEffect(() => {
-    console.log("location is ", location)
-  }, [location])
+  // useEffect(() => {
+  //   console.log("location is ", location)
+  // }, [location])
 
   return (
     <View>
-      <Text>{errorMsg ? errorMsg : `latitude: ${location.latitude}, longitude: ${location.longitude}`}</Text>
+      {(location.latitude && location.longitude) ? 
+      <TouchableOpacity style={styles.GPSenabled} onPress={() => handleSetLocation(null)}>
+        <Text style={styles.text}>GPS location enabled</Text>
+      </TouchableOpacity>
+        : 
+      <TouchableOpacity style={styles.GPSbutton} onPress={() => setClick(true)}>
+        <Text style={styles.text}>Use GPS</Text>
+      </TouchableOpacity>}
     </View>
   );
 }
@@ -47,5 +58,22 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: 18,
     textAlign: 'center',
+  },
+  GPSbutton: {
+    backgroundColor: "#274690",
+    borderRadius: 10,
+    padding: 10,
+    margin: 5,
+  },
+  GPSenabled: {
+    backgroundColor: "#002360",
+    borderRadius: 10,
+    padding: 10,
+    margin: 5,
+  },
+  text: {
+    width: "fit-content",
+    textAlign: "center",
+    color: "white",
   },
 });
