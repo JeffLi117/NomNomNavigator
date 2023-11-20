@@ -84,6 +84,10 @@ const HomeScreen = ({ navigation }) => {
     }
   }, [copiedList]);
 
+  useEffect(() => {
+    if ((location.latitude && location.longitude) || zipCode.length === 5) setShowError(false);
+  }, [location, zipCode])
+
   const handleSubmit = async () => {
     if ((location.latitude && location.longitude) || zipCode.length === 5) {
       setShowError(false);
