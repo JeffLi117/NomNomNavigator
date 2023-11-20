@@ -27,7 +27,7 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
   const [photoData, setPhotoData] = useState(null);
   const handleNext = () => {
     handleDeleteFromList();
-    navigation.navigate("RestaurantQuickView");
+    navigation.navigate("Restaurant Quick View");
   };
 
   // const singleImg = getNearbyPhoto(currentPlaceView.photos[0].photo_reference);
@@ -84,7 +84,7 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
 
         <View style={styles.bottomButtonContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("RestaurantDetail")}
+            onPress={() => navigation.navigate("Restaurant Details")}
             style={styles.bottomButton}
           >
             <Text>More Details</Text>

@@ -28,7 +28,7 @@ const HomeScreen = ({ navigation }) => {
   } = useContext(AppContext);
 
   const handleNavigate = () => {
-    navigation.navigate("RestaurantQuickView");
+    navigation.navigate("Restaurant Quick View");
   };
 
   const filterByPrice = (resultArr) => {
@@ -94,7 +94,7 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     console.log("copiedList changed");
     if (copiedList.length > 0 && places.length > 0) {
-      navigation.navigate("RestaurantQuickView");
+      navigation.navigate("Restaurant Quick View");
     }
   }, [copiedList]);
 

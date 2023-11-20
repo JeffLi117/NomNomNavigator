@@ -19,11 +19,11 @@ export default function App() {
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="NomNomNavigator" component={HomeScreen} />
           <Stack.Screen
-            name="RestaurantQuickView"
+            name="Restaurant Quick View"
             component={RestaurantQuickViewScreen}
           />
           <Stack.Screen
-            name="RestaurantDetail"
+            name="Restaurant Details"
             component={RestaurantDetailScreen}
           />
           <Stack.Screen name="RestaurantReview" component={RestaurantReview} />
