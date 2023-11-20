@@ -25,6 +25,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
     currentPlaceView,
     handleDeleteFromList,
   } = useContext(AppContext);
+
   const [restaurantDetails, setRestaurantDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showReviews, setShowReviews] = useState(false);
@@ -65,7 +66,6 @@ const RestaurantDetailScreen = ({ navigation }) => {
   };
 
   const handleNextRestaurant = () => {
-
     handleDeleteFromList()
     navigation.navigate("Restaurant Quick View");
   }
@@ -91,12 +91,12 @@ const RestaurantDetailScreen = ({ navigation }) => {
       <ScrollView>
         <View>
           <TouchableOpacity
-            style={styles.directions}
+            style={[styles.directions, styles.closeButton]}
             onPress={() => {
               setShowReviews(false);
             }}
           >
-            <Text styles={styles.text}>Back to Details</Text>
+            <Text styles={styles.text}> X </Text>
           </TouchableOpacity>
           <RestaurantReviews
             restaurantName={restaurantDetails.name}
@@ -131,25 +131,22 @@ const RestaurantDetailScreen = ({ navigation }) => {
 
           <Text style={styles.info}>{restaurantDetails.formatted_address}</Text>
         </View>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => {
-              setShowReviews(true);
-            }}
-          >
-            <Text styles={styles.text}>Check Reviews</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => {
-              Linking.openURL(`http://maps.google.com/?q=your+query`);
-            }}
-          >
-            <Text styles={styles.text}>Get Directions</Text>
-          </TouchableOpacity>
-        </View>
-
+        <TouchableOpacity
+          style={styles.detailButton}
+          onPress={() => {
+            setShowReviews(true);
+          }}
+        >
+          <Text styles={styles.detailButton}>Check Reviews</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.detailButton}
+          onPress={() => {
+            Linking.openURL(`http://maps.google.com/?q=your+query`);
+          }}
+        >
+          <Text styles={styles.detailButton}>Get Directions</Text>
+        </TouchableOpacity>
         <Text onPress={handleNextRestaurant}>New Restaurant</Text>
       </View>
     </ScrollView>
@@ -208,11 +205,32 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: "#d5bdaf",
     borderRadius: 10,
-    padding: 10,
     margin: 5,
+    width: 30,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+
   },
   text: {
     color: "white",
+    textAlign: 'center'
+  },
+  closeButton: {
+    marginLeft: 'auto',
+    textAlign: 'center'
+  },
+  detailButton: {
+    backgroundColor: "#d5bdaf",
+    borderRadius: 10,
+    margin: 5,
+    width: 120,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    padding: 2
   },
   btnContainer: {
     display: "flex",
