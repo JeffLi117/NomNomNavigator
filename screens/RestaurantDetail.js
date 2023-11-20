@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   carousel: {
-    height: 500,
+    height: 450,
     marginTop: 20,
     alignItems: "center",
     justifyContent: "center",
