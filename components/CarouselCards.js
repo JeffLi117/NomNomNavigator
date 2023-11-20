@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from "./CarouselCardItem";
 import { getDetailPhotos } from '../API.js';
@@ -7,24 +7,40 @@ import { getDetailPhotos } from '../API.js';
 const CarouselCards = ({ photoData }) => {
   const isCarousel = React.useRef(null);
   const [index, setIndex] = React.useState(0);
-  const [photoURls, setPhotoURLs] = useState([]);
+  const [photoURls, setPhotoURLs] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const fetchPhotos = async () => {
-      const photo_references = []
-      for (let i = 0; i < photoData.length; i++) {
-        photo_references.push(photoData[i].photo_reference);
-      }
+    try {
+      const fetchPhotos = async () => {
+        setIsLoading(true)
+        const photo_references = []
+        for (let i = 0; i < photoData.length; i++) {
+          photo_references.push(photoData[i].photo_reference);
+        }
 
-      let newPhotoURLs = await getDetailPhotos(photo_references);
-      setPhotoURLs(newPhotoURLs)
+        let newPhotoURLs = await getDetailPhotos(photo_references);
+        setPhotoURLs(newPhotoURLs)
+        setIsLoading(false)
+      }
+      fetchPhotos()
+
+    } catch (error) {
+      console.error(error)
     }
-    fetchPhotos()
   }, []);
 
   const handleCarouselSwipe = (index) => {
     setIndex(index);
   };
+
+  if (isLoading) {
+    return (
+      <View>
+        <Text> Loading... </Text>
+      </View>
+    )
+  }
 
   return (
     <View>
