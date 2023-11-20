@@ -12,15 +12,22 @@ import {
 import CarouselCards from "../components/CarouselCards.js";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useState, useContext, useEffect } from "react";
-import { AppContext } from '../context/AppContext.js';
-import { handlePlaceDetailQuery } from '../API';
-import RestaurantReviews from '../components/RestaurantReviews.js'
+import { AppContext } from "../context/AppContext.js";
+import { handlePlaceDetailQuery } from "../API";
+import RestaurantReviews from "../components/RestaurantReviews.js";
 
 const RestaurantDetailScreen = ({ navigation }) => {
-  const { setCopiedList, selectedCuisines, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList } = useContext(AppContext);
-  const [restaurantDetails, setRestaurantDetails] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [showReviews, setShowReviews] = useState(false)
+  const {
+    setCopiedList,
+    selectedCuisines,
+    copiedList,
+    currentPlaceId,
+    currentPlaceView,
+    handleDeleteFromList,
+  } = useContext(AppContext);
+  const [restaurantDetails, setRestaurantDetails] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showReviews, setShowReviews] = useState(false);
 
   useEffect(() => {
     async function fetchRestaurantDetails() {
@@ -48,7 +55,6 @@ const RestaurantDetailScreen = ({ navigation }) => {
     fetchRestaurantDetails();
   }, [currentPlaceId]);
 
-
   const [iconColor, setIconColor] = useState({
     color: "black",
     pressed: false,
@@ -59,24 +65,24 @@ const RestaurantDetailScreen = ({ navigation }) => {
   };
 
   const handleNextRestaurant = () => {
-    handleDeleteFromList()
+    handleDeleteFromList();
     navigation.navigate("RestaurantQuickView");
-  }
+  };
 
   const renderDollarSigns = (price_level) => {
-    let dollarSigns = ""
+    let dollarSigns = "";
     for (let i = 0; i < price_level; i++) {
-      dollarSigns += "$"
+      dollarSigns += "$";
     }
-    return dollarSigns
-  }
+    return dollarSigns;
+  };
 
   if (isLoading) {
     return (
       <View>
         <Text> Loading... </Text>
       </View>
-    )
+    );
   }
 
   if (showReviews) {
@@ -86,7 +92,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.directions}
             onPress={() => {
-              setShowReviews(false)
+              setShowReviews(false);
             }}
           >
             <Text styles={styles.text}>Back to Details</Text>
@@ -97,7 +103,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
           />
         </View>
       </ScrollView>
-    )
+    );
   }
 
   return (
@@ -109,35 +115,38 @@ const RestaurantDetailScreen = ({ navigation }) => {
 
         <Text style={styles.title}>{restaurantDetails.name}</Text>
         <View style={styles.detailsContainer}>
-          <Text style={styles.info}>{restaurantDetails.formatted_address}</Text>
+          <View style={styles.infoContainer}>
+            <Text style={styles.info}>
+              <Icon name="star" style={{ color: "#f18f01" }} size={25} />
+              {"    "}
+              {restaurantDetails.rating}
+            </Text>
+            <Text style={styles.info}>
+              {renderDollarSigns(restaurantDetails.price_level)}
+            </Text>
+          </View>
 
-          <Text style={styles.info}>
-            <Icon
-              name="star"
-              onPress={changeColor}
-              style={{ color: iconColor.color }}
-              size={25}
-            />
-            {restaurantDetails.rating}
-          </Text>
-          <Text style={styles.info}>{renderDollarSigns(restaurantDetails.price_level)}</Text>
+          <Text style={styles.info}>{restaurantDetails.formatted_address}</Text>
         </View>
-        <TouchableOpacity
-          style={styles.directions}
-          onPress={() => {
-            setShowReviews(true)
-          }}
-        >
-          <Text styles={styles.text}>Check Reviews</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.directions}
-          onPress={() => {
-            Linking.openURL(`http://maps.google.com/?q=your+query`);
-          }}
-        >
-          <Text styles={styles.text}>Get Directions</Text>
-        </TouchableOpacity>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity
+            style={styles.directions}
+            onPress={() => {
+              setShowReviews(true);
+            }}
+          >
+            <Text styles={styles.text}>Check Reviews</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.directions}
+            onPress={() => {
+              Linking.openURL(`http://maps.google.com/?q=your+query`);
+            }}
+          >
+            <Text styles={styles.text}>Get Directions</Text>
+          </TouchableOpacity>
+        </View>
+
         <Text onPress={handleNextRestaurant}>New Restaurant</Text>
       </View>
     </ScrollView>
@@ -159,6 +168,12 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     margin: 20,
+  },
+  infoContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 20,
   },
   title: {
     fontSize: 24,
@@ -187,6 +202,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
+  },
+  btnContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });
 
