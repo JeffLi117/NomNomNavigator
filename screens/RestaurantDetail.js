@@ -14,11 +14,13 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { useState, useContext, useEffect } from "react";
 import { AppContext } from '../context/AppContext.js';
 import { handlePlaceDetailQuery } from '../API';
+import RestaurantReviews from '../components/RestaurantReviews.js'
 
 const RestaurantDetailScreen = ({ navigation }) => {
   const { setCopiedList, selectedCuisines, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList } = useContext(AppContext);
   const [restaurantDetails, setRestaurantDetails] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [showReviews, setShowReviews] = useState(false)
 
   useEffect(() => {
     async function fetchRestaurantDetails() {
@@ -77,6 +79,24 @@ const RestaurantDetailScreen = ({ navigation }) => {
     )
   }
 
+  if (showReviews) {
+    return (
+      <ScrollView>
+        <View>
+          <TouchableOpacity
+            style={styles.directions}
+            onPress={() => {
+              setShowReviews(false)
+            }}
+          >
+            <Text styles={styles.text}>Back to Details</Text>
+          </TouchableOpacity>
+          <RestaurantReviews restaurantReviewData={restaurantDetails.reviews} />
+        </View>
+      </ScrollView>
+    )
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -84,14 +104,6 @@ const RestaurantDetailScreen = ({ navigation }) => {
           <CarouselCards photoData={restaurantDetails.photos} />
         </SafeAreaView>
 
-        {/* <View style={styles.iconContainer}>
-          <Icon
-            name="star"
-            onPress={changeColor}
-            style={{ color: iconColor.color }}
-            size={25}
-          />
-        </View> */}
         <Text style={styles.title}>{restaurantDetails.name}</Text>
         <View style={styles.detailsContainer}>
           <Text style={styles.info}>{restaurantDetails.formatted_address}</Text>
@@ -106,9 +118,15 @@ const RestaurantDetailScreen = ({ navigation }) => {
             {restaurantDetails.rating}
           </Text>
           <Text style={styles.info}>{renderDollarSigns(restaurantDetails.price_level)}</Text>
-          <Text style={styles.info}>restaurantDetails.reviews</Text>
-          {/* Other restaurant details */}
         </View>
+        <TouchableOpacity
+          style={styles.directions}
+          onPress={() => {
+            setShowReviews(true)
+          }}
+        >
+          <Text styles={styles.text}>Check Reviews</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.directions}
           onPress={() => {
