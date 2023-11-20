@@ -9,24 +9,21 @@ export default function GetExpoLocation() {
   const [click, setClick] = useState(false);
 
   useEffect(() => {
-    if (click) (async () => {
+    (async () => {
       if (Platform.OS === 'android' && !Device.isDevice) {
         handleSetErrorMsg(
           'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
         );
-        setClick(false);
         return;
       }
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         handleSetErrorMsg('Permission to access location was denied');
-        setClick(false);
         return;
       }
 
       let location = await Location.getCurrentPositionAsync({});
       handleSetLocation(location);
-      setClick(false);
     })();
   }, [click]);
 
@@ -41,7 +38,7 @@ export default function GetExpoLocation() {
         <Text style={styles.text}>GPS location enabled</Text>
       </TouchableOpacity>
         : 
-      <TouchableOpacity style={styles.GPSbutton} onPress={() => setClick(true)}>
+      <TouchableOpacity style={styles.GPSbutton} onPress={() => setClick(!click)}>
         <Text style={styles.text}>Use GPS</Text>
       </TouchableOpacity>}
     </View>

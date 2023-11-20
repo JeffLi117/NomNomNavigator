@@ -96,14 +96,15 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <View>
+      <View style={styles.container}>
         <FilterPicker />
-        <GetExpoLocation />
-        <Text style={styles.orText}>or</Text>
-        <ZipCodeForm />
+        <TouchableOpacity style={styles.locationInfoHolder}>
+          <GetExpoLocation />
+          <ZipCodeForm />
+        </TouchableOpacity>
         {showError && <Text style={styles.errorText}>Please enable GPS access or enter a 5-digit zip code.</Text>}
         <TouchableOpacity onPress={handleSubmit} style={styles.submitBtn}>
-          <Text style={styles.text}>Go</Text>
+          <Text style={styles.buttonText}>Go</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -114,7 +115,10 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    padding: 10,
+    paddingTop: 6,
+    backgroundColor: "#f2e5d7",
+    height: "100%"
   },
   findButton: {
     backgroundColor: "black",
@@ -123,8 +127,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
   },
+  locationInfoHolder: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
   submitBtn: {
-    backgroundColor: "#274690",
+    backgroundColor: "#b0424d",
     borderRadius: 10,
     padding: 10,
   },
@@ -136,5 +146,6 @@ const styles = StyleSheet.create({
     width: "fit-content",
     textAlign: "center",
     color: "red",
+    margin: 5,
   }
 });

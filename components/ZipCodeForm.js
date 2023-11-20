@@ -9,7 +9,7 @@ import {
 import { AppContext } from "../context/AppContext";
 
 const ZipCodeForm = () => {
-  const { zipCode, handleZipCode } = useContext(AppContext);
+  const { zipCode, handleZipCode, location } = useContext(AppContext);
 
   const handleInputChange = (text) => {
     handleZipCode(text);
@@ -21,6 +21,18 @@ const ZipCodeForm = () => {
   //     onSubmit(zipCode);
   //   }
   // };
+  if (location.latitude && location.longitude) {
+    return (
+      <View style={styles.containerGrayed}>
+      <Text style={styles.labelGrayed}>Enter Zip Code:</Text>
+      <TextInput
+        style={styles.inputGrayed}
+        placeholder="e.g., 12345"
+        keyboardType="numeric"
+      />
+    </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -43,10 +55,10 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     paddingTop: 0,
+    paddingBottom: 0,
   },
   label: {
     fontSize: 16,
-    marginBottom: 8,
   },
   input: {
     height: 40,
@@ -56,14 +68,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderRadius: 10,
   },
-  submitBtn: {
-    backgroundColor: "#274690",
-    borderRadius: 10,
-    padding: 10,
+  containerGrayed: {
+    padding: 16,
+    paddingTop: 0,
+    paddingBottom: 0,
+    opacity: 0.7,
+    text: "gray",
   },
-  text: {
-    textAlign: "center",
-    color: "white",
+  labelGrayed: {
+    fontSize: 16,
+    color: "gray",
+  },
+  inputGrayed: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 16,
+    paddingHorizontal: 8,
+    borderRadius: 10,
   },
 });
 
