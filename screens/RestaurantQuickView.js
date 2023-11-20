@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import {
   ScrollView,
   View,
@@ -9,18 +9,27 @@ import {
 } from "react-native";
 import CarouselCards from "../components/CarouselCards.js";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { AppContext } from '../context/AppContext.js';
 
 const RestaurantQuickViewScreen = ({ navigation }) => {
+  const { setCopiedList, selectedCuisines, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList } = useContext(AppContext);
+  console.log(copiedList.length);
+  const handleNext = () => {
+    handleDeleteFromList();
+    navigation.navigate("RestaurantQuickView");
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
         <SafeAreaView style={styles.carousel}>
           <CarouselCards />
         </SafeAreaView>
-        <Text style={styles.title}>Restaurant Name</Text>
+        <Text style={styles.title}>{currentPlaceView.name}</Text>
         <View style={styles.infoContainer}>
-          <Text style={styles.info}>Cuisine</Text>
-          <Text style={styles.info}>$$</Text>
+          {selectedCuisines && <Text style={styles.info}>{selectedCuisines}</Text>}
+          <Text style={styles.info}>Rating: {currentPlaceView.rating}</Text>
+          <Text style={styles.info}>Price level: {currentPlaceView.price_level}</Text>
         </View>
         <View style={styles.iconContainer}>
           <Icon name="star" style={styles.icon} size={25} />
@@ -38,7 +47,8 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
             <Text>More Details</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.bottomButton}>
+
+          <TouchableOpacity style={styles.bottomButt} onPress={handleNext}>
             <Text>Next Restaurant</Text>
           </TouchableOpacity>
         </View>
