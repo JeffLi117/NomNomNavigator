@@ -106,7 +106,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <View>
+      <View style={styles.container}>
         {/* <GetExpoLocation /> */}
         <FilterPicker />
         <ZipCodeForm onSubmit={handleZipCodeSubmit} />
@@ -132,6 +132,9 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+  },
   findButton: {
     backgroundColor: "black",
   },
