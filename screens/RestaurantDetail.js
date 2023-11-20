@@ -116,12 +116,14 @@ const RestaurantDetailScreen = ({ navigation }) => {
         <Text style={styles.title}>{restaurantDetails.name}</Text>
         <View style={styles.detailsContainer}>
           <View style={styles.infoContainer}>
-            <Text style={styles.info}>
-              <Icon name="star" style={{ color: "#f18f01" }} size={25} />
-              {"    "}
-              {restaurantDetails.rating}
-            </Text>
-            <Text style={styles.info}>
+            <View style={styles.pill}>
+              <Icon name="star" style={{ color: "#f18f01" }} size={20} />
+              <Text>
+                {"    "}
+                {restaurantDetails.rating}
+              </Text>
+            </View>
+            <Text style={styles.pill}>
               {renderDollarSigns(restaurantDetails.price_level)}
             </Text>
           </View>
@@ -130,7 +132,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
         </View>
         <View style={styles.btnContainer}>
           <TouchableOpacity
-            style={styles.directions}
+            style={styles.btn}
             onPress={() => {
               setShowReviews(true);
             }}
@@ -138,7 +140,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
             <Text styles={styles.text}>Check Reviews</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.directions}
+            style={styles.btn}
             onPress={() => {
               Linking.openURL(`http://maps.google.com/?q=your+query`);
             }}
@@ -184,17 +186,27 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
   },
+  pill: {
+    backgroundColor: "#d5bdaf",
+    borderRadius: 50,
+    margin: 5,
+    textAlign: "center",
+    paddingTop: 15,
+    width: 100,
+    height: 50,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
   carousel: {
     height: 450,
     marginTop: 20,
-    alignItems: "center",
-    justifyContent: "center",
   },
   iconContainer: {
     width: "80%",
     alignItems: "flex-end",
   },
-  directions: {
+  btn: {
     backgroundColor: "#d5bdaf",
     borderRadius: 10,
     padding: 10,
