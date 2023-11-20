@@ -56,3 +56,4 @@ const getNearbyPhoto = async (photo_reference, maxWidth = 400) => {
 };
 
 export { handleGeocoding, handleNearbySearch, getNearbyPhoto };
+

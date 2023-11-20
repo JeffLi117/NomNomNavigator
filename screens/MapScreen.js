@@ -36,12 +36,13 @@ const MapScreen = () => {
   return (
     <View style={{ flex: 1 }}>
         <ZipCodeForm onSubmit={handleZipCodeSubmit} />
-      <Text>Nearby Places:</Text>
+      <Text >Nearby Places:</Text>
       {places.map((place) => (
         <Text key={place.place_id}>{place.name}</Text>
       ))}
     </View>
   );
 };
+
 
 export default MapScreen;

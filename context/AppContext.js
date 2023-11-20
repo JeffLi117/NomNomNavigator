@@ -31,7 +31,7 @@ const AppProvider = ({ children }) => {
         setSelectedCuisines(str);
     }
   };
-  
+
   const toggleSelectedStars = (num) => {
     if (selectedStars === num) {
       setSelectedStars(null);
@@ -54,9 +54,9 @@ const AppProvider = ({ children }) => {
   const handleSetLocation = (location) => {
     // location ex:
     // {
-    //   "coords": 
-    //     {"accuracy": 100, "altitude": 15.199999809265137, "altitudeAccuracy": 100, "heading": 0, "latitude": 29.801271, "longitude": -95.8004809, "speed": 0}, 
-    //   "mocked": false, 
+    //   "coords":
+    //     {"accuracy": 100, "altitude": 15.199999809265137, "altitudeAccuracy": 100, "heading": 0, "latitude": 29.801271, "longitude": -95.8004809, "speed": 0},
+    //   "mocked": false,
     //   "timestamp": 1700346862191
     // }
     // `latitude: ${JSON.stringify(location.coords.latitude)}, longitude: ${JSON.stringify(location.coords.longitude)}`
@@ -72,7 +72,7 @@ const AppProvider = ({ children }) => {
     newList.splice(foundIndex, 1);
     setCopiedList(newList);
   }
-  
+
   const handleSetErrorMsg = (str) => {
     setErrorMsg(str);
   };
