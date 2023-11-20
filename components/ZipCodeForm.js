@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 
 const ZipCodeForm = ({ onSubmit }) => {
-  const [zipCode, setZipCode] = useState('');
+  const [zipCode, setZipCode] = useState("");
 
   const handleInputChange = (text) => {
     setZipCode(text);
@@ -25,7 +31,9 @@ const ZipCodeForm = ({ onSubmit }) => {
         onChangeText={handleInputChange}
         value={zipCode}
       />
-      <Button title="Submit" onPress={handleSubmit} />
+      <TouchableOpacity onPress={handleSubmit} style={styles.submitBtn}>
+        <Text style={styles.text}>Submit</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -40,10 +48,20 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     marginBottom: 16,
     paddingHorizontal: 8,
+    borderRadius: 10,
+  },
+  submitBtn: {
+    backgroundColor: "#274690",
+    borderRadius: 10,
+    padding: 10,
+  },
+  text: {
+    textAlign: "center",
+    color: "white",
   },
 });
 
