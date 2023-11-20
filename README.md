@@ -13,3 +13,24 @@ Jeffrey Li
 Valentina Valverde  
 Cindy Pan  
 Hannah Nguyen  
+
+# How to run this application locally
+
+## Retrieve a Google API Key:
+- Go to https://developers.google.com/maps/documentation/javascript/get-api-key.
+- Click on “Get Started”.
+- Sign in with your Google account if prompted, then select or create a project.
+- Follow the prompts to enable the necessary APIs, such as Places API, Geolocation API, and Geocoding API.
+- Once enabled, navigate to the Credentials section.
+- Click “Create Credentials” and select “API Key” to generate your API key.
+- Secure your API key and follow best practices for API key management.
+- Note: new users may need to verify account information & payment information
+
+
+## Instructions for Setting Up the App:
+- Clone the repository on your local device using `git clone https://github.com/JeffLi117/NomNomNavigator.git`.
+- Install dependencies with `npm i`.
+- Create a .env file and add: GOOGLE_MAPS_API_KEY={your Google API key}. (Refer to above instructions on how to retrieve the API key)
+- Start the server using `expo start` or `npm start`.
+- If you have an Android device, download the Expo app and scan the QR code generated.
+- Alternatively, users can download Android Studio and set up a virtual Android device (emulator) to get access to the app.
