@@ -215,11 +215,19 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    textAlign: 'center'
+    textAlign: 'center',
   },
   closeButton: {
     marginLeft: 'auto',
-    textAlign: 'center'
+    textAlign: 'center',
+    width:30,
+    height:30,
+    backgroundColor: '#d5bdaf',
+    borderRadius:10,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    padding: 2
   },
   detailButton: {
     backgroundColor: "#d5bdaf",
