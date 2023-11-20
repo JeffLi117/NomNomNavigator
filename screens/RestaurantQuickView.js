@@ -80,10 +80,6 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
             <Text>Next Restaurant</Text>
           </TouchableOpacity>
         </View>
-        <Button
-          title="Go to RestaurantReview"
-          onPress={() => navigation.navigate('RestaurantReview')}
-        />
       </View>
     </ScrollView>
   );
