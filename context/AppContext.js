@@ -3,9 +3,7 @@ import React, { createContext, useState, useEffect } from 'react';
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
-  const [selectedCuisines, setSelectedCuisines] = useState({
-    "asian": 0, "japanese": 0, "korean": 0, "american": 0, "breakfast": 0, "diner": 0, "fast food": 0, "italian": 0,
-  });
+  const [selectedCuisines, setSelectedCuisines] = useState(null);
   const [selectedStars, setSelectedStars] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState([
     {"text": "$", priceLevel: 0, "toggle": 0},
@@ -22,17 +20,24 @@ const AppProvider = ({ children }) => {
   // }
   const [location, setLocation] = useState({});
   const [errorMsg, setErrorMsg] = useState(null);
+  const [copiedList, setCopiedList] = useState([]);
+  const [currentPlaceId, setCurrentPlaceId] = useState(null);
+  const [currentPlaceView, setCurrentPlaceView] = useState(null);
 
-  const toggleSelectedCuisines = (objKey) => {
-    if (selectedCuisines[objKey] === 0) {
-        setSelectedCuisines({...selectedCuisines, [objKey]: 1});
+  const toggleSelectedCuisines = (str) => {
+    if (selectedCuisines === str) {
+        setSelectedCuisines(null);
     } else {
-        setSelectedCuisines({...selectedCuisines, [objKey]: 0});
+        setSelectedCuisines(str);
     }
   };
 
   const toggleSelectedStars = (num) => {
-    setSelectedStars(num);
+    if (selectedStars === num) {
+      setSelectedStars(null);
+    } else {
+      setSelectedStars(num);
+    }
   };
   
   const toggleSelectedPrice = (priceLevel) => {
@@ -61,6 +66,12 @@ const AppProvider = ({ children }) => {
       });
   };
 
+  const handleDeleteFromList = () => {
+    const foundIndex = copiedList.findIndex((el) => el.place_id === currentPlaceId);
+    const newList = copiedList.slice();
+    newList.splice(foundIndex, 1);
+    setCopiedList(newList);
+  }
 
   const handleSetErrorMsg = (str) => {
     setErrorMsg(str);
@@ -86,13 +97,22 @@ const AppProvider = ({ children }) => {
       setShowRange([])
     }
   }, [selectedPrice])
+
+  useEffect(() => {
+    if (copiedList.length > 0) {
+      const randomIndex = Math.floor(Math.random() * copiedList.length);
+      const randomSel = copiedList[randomIndex];
+      setCurrentPlaceId(randomSel.place_id);
+      setCurrentPlaceView(randomSel);
+    }
+  }, [copiedList])
   
   useEffect(() => {
-    console.log("showRange is ", showRange);
-  }, [showRange])
+    console.log("currentPlaceId is ", currentPlaceId);
+  }, [currentPlaceId])
 
   return (
-    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg, showRange }}>
+    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg, showRange, setCopiedList, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList }}>
       {children}
     </AppContext.Provider>
   );

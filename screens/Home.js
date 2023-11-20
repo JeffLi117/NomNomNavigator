@@ -9,13 +9,11 @@ import GetExpoLocation from '../components/GetExpoLocation';
 const HomeScreen = ({ navigation }) => {
   const [zipCode, setZipCode] = useState("");
   const [places, setPlaces] = useState([]);
-  const { toggleSelectedCuisines, toggleSelectedStars, toggleSelectedPrice, showRange, selectedStars } = useContext(AppContext);
-
+  const { toggleSelectedCuisines, toggleSelectedStars, toggleSelectedPrice, showRange, selectedStars, selectedCuisine, setCopiedList, copiedList } = useContext(AppContext);
 
   const handleNavigate = () => {
     navigation.navigate('RestaurantQuickView');
   };
-
 
   const filterByPrice = (resultArr) => {
     return resultArr.filter((result) => {
@@ -36,10 +34,9 @@ const HomeScreen = ({ navigation }) => {
 
         if (coordinates) {
           const { latitude, longitude } = coordinates;
-          const nearbyPlaces = await handleNearbySearch(latitude, longitude);
+          const nearbyPlaces = await handleNearbySearch(latitude, longitude, selectedCuisine);
           let filtered;
           let filtersRun = false;
-          console.log("filtersRun before all the if's ", filtersRun);
           if (showRange.length === 2) {
             filtered = filterByPrice(nearbyPlaces);
             filtersRun = true;
@@ -54,11 +51,13 @@ const HomeScreen = ({ navigation }) => {
             }
           }
           if (filtersRun) {
-            setPlaces(filtered);
+            setPlaces(filtered); 
+            setCopiedList(filtered);
             console.log("# of filtered results is ", filtered.length);
           }
           else {
             setPlaces(nearbyPlaces);
+            setCopiedList(nearbyPlaces);
           }
         }
       }
@@ -67,47 +66,12 @@ const HomeScreen = ({ navigation }) => {
     }
   };
 
-  // useEffect(() => {
-  //   const fetchCoordinates = async () => {
-  //     try {
-  //       if (zipCode !== "") {
-  //       const coordinates = await handleGeocoding(zipCode);
-
-  //         if (coordinates) {
-  //           const { latitude, longitude } = coordinates;
-  //           const nearbyPlaces = await handleNearbySearch(latitude, longitude);
-  //           let filtered;
-  //           let filtersRun = false;
-  //           console.log("filtersRun before all the if's ", filtersRun);
-  //           if (showRange.length === 2) {
-  //             filtered = filterByPrice(nearbyPlaces);
-  //             filtersRun = true;
-  //           }
-  //           if (selectedStars) {
-  //             // nearbyPlaces has already been filtered by price, thus filtered array is not null
-  //             if (filtersRun) {
-  //               filtered = filterByStars(filtered);
-  //             } else {
-  //               filtered = filterByStars(nearbyPlaces);
-  //               filtersRun = true;
-  //             }
-  //           }
-  //           if (filtersRun) {
-  //             setPlaces(filtered);
-  //             console.log("# of filtered results is ", filtered.length);
-  //           }
-  //           else {
-  //             setPlaces(nearbyPlaces);
-  //           }
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-
-  //   fetchCoordinates();
-  // }, [zipCode]);
+  useEffect(() => {
+    console.log("copiedList changed");
+    if (copiedList.length > 0 && places.length > 0) {
+      navigation.navigate('RestaurantQuickView');
+    }
+  }, [copiedList])
 
   const handleZipCodeSubmit = async (zip) => {
     // Handle the submitted zip code, e.g., show an alert
@@ -120,7 +84,7 @@ const HomeScreen = ({ navigation }) => {
     <ScrollView>
       <View>
         <Text>Home Screen</Text>
-        <GetExpoLocation />
+        {/* <GetExpoLocation /> */}
         <FilterPicker />
         <ZipCodeForm onSubmit={handleZipCodeSubmit} />
         <TouchableOpacity
@@ -134,9 +98,9 @@ const HomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('MapScreen')}
         />
         <Text>Nearby Places:</Text>
-        {places.map((place) => (
+        {/* {places.map((place) => (
           <Text key={place.place_id}>{place.name}</Text>
-        ))}
+        ))} */}
       </View>
     </ScrollView>
   );

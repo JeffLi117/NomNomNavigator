@@ -1,67 +1,109 @@
-import React from 'react';
-import { View, Text, Button, Linking, StyleSheet, SafeAreaView } from 'react-native';
-import CarouselCards from '../components/CarouselCards.js'
-
+import React from "react";
+import {
+  ScrollView,
+  View,
+  Text,
+  Button,
+  Linking,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
+import CarouselCards from "../components/CarouselCards.js";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { useState } from "react";
 
 const RestaurantDetailScreen = ({ navigation }) => {
+  const [iconColor, setIconColor] = useState({
+    color: "black",
+    pressed: false,
+  });
+
+  const changeColor = () => {
+    setIconColor({ color: "#f18f01", pressed: true });
+  };
+
   return (
-    <View style={styles.container}>
-       <SafeAreaView style={styles.carousel}>
-      <CarouselCards />
-    </SafeAreaView>
-      <Text style={styles.title}>Restaurant Title</Text>
-      <View style={styles.detailsContainer}>
-        <Text style={styles.title}>restaurantDetails.name</Text>
-        <Text style={styles.address}>restaurantDetails.address</Text>
-        <Text style={styles.rating}>Rating: restaurantDetails.rating</Text>
-        <Text style={styles.price}>Restaurant $$</Text>
-        {/* Other restaurant details */}
+    <ScrollView>
+      <View style={styles.container}>
+        <SafeAreaView style={styles.carousel}>
+          <CarouselCards />
+        </SafeAreaView>
+
+        {/* <View style={styles.iconContainer}>
+          <Icon
+            name="star"
+            onPress={changeColor}
+            style={{ color: iconColor.color }}
+            size={25}
+          />
+        </View> */}
+        <Text style={styles.title}>Restaurant Title</Text>
+        <View style={styles.detailsContainer}>
+          <Text style={styles.info}>restaurantDetails.address</Text>
+          <Text style={styles.info}>restaurantDetails.rating</Text>
+          <Text style={styles.info}>restaurantDetails.menu</Text>
+          <Text style={styles.info}>$$</Text>
+          {/* Other restaurant details */}
+        </View>
+        <TouchableOpacity
+          style={styles.directions}
+          onPress={() => {
+            Linking.openURL(`http://maps.google.com/?q=your+query`);
+          }}
+        >
+          <Text styles={styles.text}>Get Directions</Text>
+        </TouchableOpacity>
+        <Text onPress={() => navigation.goBack()}>New Restaurant</Text>
       </View>
-      <Text onPress={() => {Linking.openURL(`http://maps.google.com/?q=your+query`)}}>Get Directions</Text>
-      <Button
-        title="Go back to Home"
-        onPress={() => navigation.goBack()}
-      />
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#f2e5d7",
+    paddingBottom: 20,
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
     marginBottom: 20,
   },
   detailsContainer: {
-    paddingHorizontal: 20,
+    margin: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
-  address: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  price: {
-    fontSize: 18,
-    color: 'green', // Change color as needed
-    marginBottom: 12,
-    fontWeight: 'bold', // Make it bold
+  info: {
+    fontSize: 20,
+    textAlign: "center",
   },
   carousel: {
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 50
+    height: 450,
+    marginTop: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
-})
+  iconContainer: {
+    width: "80%",
+    alignItems: "flex-end",
+  },
+  directions: {
+    backgroundColor: "#d5bdaf",
+    borderRadius: 10,
+    padding: 10,
+    margin: 5,
+  },
+  text: {
+    color: "white",
+  },
+});
 
 export default RestaurantDetailScreen;
