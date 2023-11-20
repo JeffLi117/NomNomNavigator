@@ -20,6 +20,9 @@ const AppProvider = ({ children }) => {
   // }
   const [location, setLocation] = useState({});
   const [errorMsg, setErrorMsg] = useState(null);
+  const [copiedList, setCopiedList] = useState([]);
+  const [currentPlaceId, setCurrentPlaceId] = useState(null);
+  const [currentPlaceView, setCurrentPlaceView] = useState(null);
 
   const toggleSelectedCuisines = (str) => {
     if (selectedCuisines === str) {
@@ -63,6 +66,12 @@ const AppProvider = ({ children }) => {
       });
   };
 
+  const handleDeleteFromList = () => {
+    const foundIndex = copiedList.findIndex((el) => el.place_id === currentPlaceId);
+    const newList = copiedList.slice();
+    newList.splice(foundIndex, 1);
+    setCopiedList(newList);
+  }
   
   const handleSetErrorMsg = (str) => {
     setErrorMsg(str);
@@ -88,13 +97,22 @@ const AppProvider = ({ children }) => {
       setShowRange([])
     }
   }, [selectedPrice])
+
+  useEffect(() => {
+    if (copiedList.length > 0) {
+      const randomIndex = Math.floor(Math.random() * copiedList.length);
+      const randomSel = copiedList[randomIndex];
+      setCurrentPlaceId(randomSel.place_id);
+      setCurrentPlaceView(randomSel);
+    }
+  }, [copiedList])
   
   useEffect(() => {
-    console.log("selectedCuisines is ", selectedCuisines);
-  }, [selectedCuisines])
+    console.log("currentPlaceId is ", currentPlaceId);
+  }, [currentPlaceId])
 
   return (
-    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg, showRange }}>
+    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg, showRange, setCopiedList, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList }}>
       {children}
     </AppContext.Provider>
   );
