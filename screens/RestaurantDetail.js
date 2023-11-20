@@ -12,12 +12,20 @@ import {
 import CarouselCards from "../components/CarouselCards.js";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useState, useContext, useEffect } from "react";
-import { AppContext } from '../context/AppContext.js';
-import { handlePlaceDetailQuery } from '../API';
-import RestaurantReviews from '../components/RestaurantReviews.js';
+import { AppContext } from "../context/AppContext.js";
+import { handlePlaceDetailQuery } from "../API";
+import RestaurantReviews from "../components/RestaurantReviews.js";
 
 const RestaurantDetailScreen = ({ navigation }) => {
-  const { setCopiedList, selectedCuisines, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList } = useContext(AppContext);
+  const {
+    setCopiedList,
+    selectedCuisines,
+    copiedList,
+    currentPlaceId,
+    currentPlaceView,
+    handleDeleteFromList,
+  } = useContext(AppContext);
+
   const [restaurantDetails, setRestaurantDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showReviews, setShowReviews] = useState(false);
@@ -48,7 +56,6 @@ const RestaurantDetailScreen = ({ navigation }) => {
     fetchRestaurantDetails();
   }, [currentPlaceId]);
 
-
   const [iconColor, setIconColor] = useState({
     color: "black",
     pressed: false,
@@ -59,9 +66,9 @@ const RestaurantDetailScreen = ({ navigation }) => {
   };
 
   const handleNextRestaurant = () => {
-    handleDeleteFromList();
-    navigation.navigate("RestaurantQuickView");
-  };
+    handleDeleteFromList()
+    navigation.navigate("Restaurant Quick View");
+  }
 
   const renderDollarSigns = (price_level) => {
     let dollarSigns = "";
@@ -109,18 +116,20 @@ const RestaurantDetailScreen = ({ navigation }) => {
 
         <Text style={styles.title}>{restaurantDetails.name}</Text>
         <View style={styles.detailsContainer}>
-          <Text style={styles.info}>{restaurantDetails.formatted_address}</Text>
+          <View style={styles.infoContainer}>
+            <View style={styles.pill}>
+              <Icon name="star" style={{ color: "#f18f01" }} size={20} />
+              <Text>
+                {"    "}
+                {restaurantDetails.rating}
+              </Text>
+            </View>
+            <Text style={styles.pill}>
+              {renderDollarSigns(restaurantDetails.price_level)}
+            </Text>
+          </View>
 
-          <Text style={styles.info}>
-            <Icon
-              name="star"
-              onPress={changeColor}
-              style={{ color: iconColor.color }}
-              size={25}
-            />
-            {restaurantDetails.rating}
-          </Text>
-          <Text style={styles.info}>{renderDollarSigns(restaurantDetails.price_level)}</Text>
+          <Text style={styles.info}>{restaurantDetails.formatted_address}</Text>
         </View>
         <TouchableOpacity
           style={styles.detailButton}
@@ -155,31 +164,45 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 200,
-    marginBottom: 20,
   },
   detailsContainer: {
     margin: 20,
   },
+  infoContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 20,
+  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
   },
   info: {
     fontSize: 20,
     textAlign: "center",
   },
+  pill: {
+    backgroundColor: "#d5bdaf",
+    borderRadius: 50,
+    margin: 5,
+    textAlign: "center",
+    paddingTop: 15,
+    width: 100,
+    height: 50,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
   carousel: {
     height: 450,
     marginTop: 20,
-    alignItems: "center",
-    justifyContent: "center",
   },
   iconContainer: {
     width: "80%",
     alignItems: "flex-end",
   },
-  directions: {
+  btn: {
     backgroundColor: "#d5bdaf",
     borderRadius: 10,
     margin: 5,
@@ -208,9 +231,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     padding: 2
-
-
-  }
+  },
+  btnContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
 });
 
 export default RestaurantDetailScreen;

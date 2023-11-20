@@ -14,28 +14,23 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-
     <AppProvider>
-      <NavigationContainer >
+      <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="NomNomNavigator" component={HomeScreen} />
           <Stack.Screen
-            name="RestaurantQuickView"
+            name="Restaurant Quick View"
             component={RestaurantQuickViewScreen}
           />
           <Stack.Screen
-            name="RestaurantDetail"
+            name="Restaurant Details"
             component={RestaurantDetailScreen}
           />
-          <Stack.Screen
-            name="RestaurantReview"
-            component={RestaurantReview}
-          />
+          <Stack.Screen name="RestaurantReview" component={RestaurantReview} />
           <Stack.Screen name="MapScreen" component={MapScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
-
   );
   //  return (
   //    <View style={styles.container}>
@@ -49,7 +44,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },

@@ -19,6 +19,7 @@ const AppProvider = ({ children }) => {
   //   longitude: someNum,
   // }
   const [location, setLocation] = useState({});
+  const [zipCode, setZipCode] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
   const [copiedList, setCopiedList] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
@@ -60,11 +61,20 @@ const AppProvider = ({ children }) => {
     //   "timestamp": 1700346862191
     // }
     // `latitude: ${JSON.stringify(location.coords.latitude)}, longitude: ${JSON.stringify(location.coords.longitude)}`
-    setLocation({
+    if (location) {
+      setLocation({
         "latitude": `${JSON.stringify(location.coords.latitude)}`,
         "longitude": `${JSON.stringify(location.coords.longitude)}`,
       });
+    } else {
+      setLocation({})
+    }
+    
   };
+
+  const handleZipCode = (text) => {
+    setZipCode(text);
+  }
 
   const handleDeleteFromList = () => {
     const foundIndex = copiedList.findIndex((el) => el.place_id === currentPlaceId);
@@ -108,11 +118,15 @@ const AppProvider = ({ children }) => {
   }, [copiedList])
   
   useEffect(() => {
-    console.log("currentPlaceId is ", currentPlaceId);
-  }, [currentPlaceId])
+    console.log("location is ", location);
+  }, [location])
+
+  useEffect(() => {
+    console.log("zipCode is ", zipCode);
+  }, [zipCode])
 
   return (
-    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg, showRange, setCopiedList, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList }}>
+    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg, showRange, setCopiedList, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList, zipCode, handleZipCode }}>
       {children}
     </AppContext.Provider>
   );
