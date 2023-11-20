@@ -67,10 +67,10 @@ export default FilterPicker;
 
 const styles = StyleSheet.create({
     regularBtn: {
-      backgroundColor: 'blue', 
+      backgroundColor: 'blue',
     },
     selectedBtn: {
-      backgroundColor: 'green', 
+      backgroundColor: 'green',
     },
     buttonText: {
       textAlign: 'center',

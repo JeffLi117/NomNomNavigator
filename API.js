@@ -41,8 +41,18 @@ const handleNearbySearch = async (latitude, longitude, keyword = "", radius = 24
   }
 };
 
-const handlePlaceDetailSearch = async (placeId) => {
-
+const handlePlaceDetailQuery = async (placeId) => {
+  const fields = 'opening_hours,formatted_address,name,photos,price_level,rating,reviews,url,user_ratings_total,website'
+  try {
+    const data = await axios.get(
+      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=${API_KEY}&fields=${fields}`
+    );
+    return data.data.result
+  } catch (error) {
+    console.error('Error in detail query:', error);
+    throw error;
+  }
 }
 
-export { handleGeocoding, handleNearbySearch };
+export { handleGeocoding, handleNearbySearch, handlePlaceDetailQuery };
+

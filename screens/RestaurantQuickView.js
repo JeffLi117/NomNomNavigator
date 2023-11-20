@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   ScrollView,
   View,
+  Button,
   Text,
   SafeAreaView,
   StyleSheet,
@@ -48,11 +49,14 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
             <Text>More Details</Text>
           </TouchableOpacity>
 
-
           <TouchableOpacity style={styles.bottomButt} onPress={handleNext}>
             <Text>Next Restaurant</Text>
           </TouchableOpacity>
         </View>
+        <Button
+          title="Go to RestaurantReview"
+          onPress={() => navigation.navigate('RestaurantReview')}
+        />
       </View>
     </ScrollView>
   );

@@ -13,15 +13,38 @@ import CarouselCards from "../components/CarouselCards.js";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useState, useContext, useEffect } from "react";
 import { AppContext } from '../context/AppContext.js';
+import { handlePlaceDetailQuery } from '../API';
 
 const RestaurantDetailScreen = ({ navigation }) => {
   const { setCopiedList, selectedCuisines, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList } = useContext(AppContext);
+  const [restaurantDetails, setRestaurantDetails] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    if (currentPlaceId) {
+    async function fetchRestaurantDetails() {
+      try {
+        if (currentPlaceId) {
+          // Set loading state to true before making the API call
+          setIsLoading(true);
 
+          // Make the API call and wait for the response
+          const data = await handlePlaceDetailQuery(currentPlaceId);
+
+          // Update restaurantDetails with the fetched data
+          setRestaurantDetails(data);
+        }
+      } catch (error) {
+        // Handle errors, if any, and log the details
+        console.error("Error fetching restaurant details:", error);
+      } finally {
+        // Set loading state to false after the API call is completed (success or error)
+        setIsLoading(false);
+      }
     }
-  }, [])
+
+    // Call the fetchRestaurantDetails function when currentPlaceId changes
+    fetchRestaurantDetails();
+  }, [currentPlaceId]);
 
 
   const [iconColor, setIconColor] = useState({
@@ -36,6 +59,14 @@ const RestaurantDetailScreen = ({ navigation }) => {
   const handleNextRestaurant = () => {
     handleDeleteFromList()
     navigation.navigate("RestaurantQuickView");
+  }
+
+  if (isLoading) {
+    return (
+      <View>
+        <Text> Loading... </Text>
+      </View>
+    )
   }
 
   return (
@@ -53,12 +84,12 @@ const RestaurantDetailScreen = ({ navigation }) => {
             size={25}
           />
         </View> */}
-        <Text style={styles.title}>Restaurant Title</Text>
+        <Text style={styles.title}>{restaurantDetails.name}</Text>
         <View style={styles.detailsContainer}>
-          <Text style={styles.info}>restaurantDetails.address</Text>
-          <Text style={styles.info}>restaurantDetails.rating</Text>
+          <Text style={styles.info}>{restaurantDetails.formatted_address}</Text>
+          <Text style={styles.info}>{restaurantDetails.rating}</Text>
           <Text style={styles.info}>restaurantDetails.menu</Text>
-          <Text style={styles.info}>$$</Text>
+          <Text style={styles.info}>price level</Text>
           {/* Other restaurant details */}
         </View>
         <TouchableOpacity
