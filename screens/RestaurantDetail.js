@@ -12,15 +12,22 @@ import {
 import CarouselCards from "../components/CarouselCards.js";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useState, useContext, useEffect } from "react";
-import { AppContext } from '../context/AppContext.js';
-import { handlePlaceDetailQuery } from '../API';
-import RestaurantReviews from '../components/RestaurantReviews.js'
+import { AppContext } from "../context/AppContext.js";
+import { handlePlaceDetailQuery } from "../API";
+import RestaurantReviews from "../components/RestaurantReviews.js";
 
 const RestaurantDetailScreen = ({ navigation }) => {
-  const { setCopiedList, selectedCuisines, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList } = useContext(AppContext);
-  const [restaurantDetails, setRestaurantDetails] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [showReviews, setShowReviews] = useState(false)
+  const {
+    setCopiedList,
+    selectedCuisines,
+    copiedList,
+    currentPlaceId,
+    currentPlaceView,
+    handleDeleteFromList,
+  } = useContext(AppContext);
+  const [restaurantDetails, setRestaurantDetails] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showReviews, setShowReviews] = useState(false);
 
   useEffect(() => {
     async function fetchRestaurantDetails() {
@@ -48,7 +55,6 @@ const RestaurantDetailScreen = ({ navigation }) => {
     fetchRestaurantDetails();
   }, [currentPlaceId]);
 
-
   const [iconColor, setIconColor] = useState({
     color: "black",
     pressed: false,
@@ -59,24 +65,25 @@ const RestaurantDetailScreen = ({ navigation }) => {
   };
 
   const handleNextRestaurant = () => {
+
     handleDeleteFromList()
     navigation.navigate("Restaurant Quick View");
   }
 
   const renderDollarSigns = (price_level) => {
-    let dollarSigns = ""
+    let dollarSigns = "";
     for (let i = 0; i < price_level; i++) {
-      dollarSigns += "$"
+      dollarSigns += "$";
     }
-    return dollarSigns
-  }
+    return dollarSigns;
+  };
 
   if (isLoading) {
     return (
       <View>
         <Text> Loading... </Text>
       </View>
-    )
+    );
   }
 
   if (showReviews) {
@@ -86,7 +93,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.directions}
             onPress={() => {
-              setShowReviews(false)
+              setShowReviews(false);
             }}
           >
             <Text styles={styles.text}>Back to Details</Text>
@@ -97,7 +104,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
           />
         </View>
       </ScrollView>
-    )
+    );
   }
 
   return (
@@ -109,35 +116,40 @@ const RestaurantDetailScreen = ({ navigation }) => {
 
         <Text style={styles.title}>{restaurantDetails.name}</Text>
         <View style={styles.detailsContainer}>
-          <Text style={styles.info}>{restaurantDetails.formatted_address}</Text>
+          <View style={styles.infoContainer}>
+            <View style={styles.pill}>
+              <Icon name="star" style={{ color: "#f18f01" }} size={20} />
+              <Text>
+                {"    "}
+                {restaurantDetails.rating}
+              </Text>
+            </View>
+            <Text style={styles.pill}>
+              {renderDollarSigns(restaurantDetails.price_level)}
+            </Text>
+          </View>
 
-          <Text style={styles.info}>
-            <Icon
-              name="star"
-              onPress={changeColor}
-              style={{ color: iconColor.color }}
-              size={25}
-            />
-            {restaurantDetails.rating}
-          </Text>
-          <Text style={styles.info}>{renderDollarSigns(restaurantDetails.price_level)}</Text>
+          <Text style={styles.info}>{restaurantDetails.formatted_address}</Text>
         </View>
-        <TouchableOpacity
-          style={styles.directions}
-          onPress={() => {
-            setShowReviews(true)
-          }}
-        >
-          <Text styles={styles.text}>Check Reviews</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.directions}
-          onPress={() => {
-            Linking.openURL(`http://maps.google.com/?q=your+query`);
-          }}
-        >
-          <Text styles={styles.text}>Get Directions</Text>
-        </TouchableOpacity>
+        <View style={styles.btnContainer}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => {
+              setShowReviews(true);
+            }}
+          >
+            <Text styles={styles.text}>Check Reviews</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => {
+              Linking.openURL(`http://maps.google.com/?q=your+query`);
+            }}
+          >
+            <Text styles={styles.text}>Get Directions</Text>
+          </TouchableOpacity>
+        </View>
+
         <Text onPress={handleNextRestaurant}>New Restaurant</Text>
       </View>
     </ScrollView>
@@ -160,6 +172,12 @@ const styles = StyleSheet.create({
   detailsContainer: {
     margin: 20,
   },
+  infoContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 20,
+  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
@@ -169,17 +187,27 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
   },
+  pill: {
+    backgroundColor: "#d5bdaf",
+    borderRadius: 50,
+    margin: 5,
+    textAlign: "center",
+    paddingTop: 15,
+    width: 100,
+    height: 50,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
   carousel: {
     height: 450,
     marginTop: 20,
-    alignItems: "center",
-    justifyContent: "center",
   },
   iconContainer: {
     width: "80%",
     alignItems: "flex-end",
   },
-  directions: {
+  btn: {
     backgroundColor: "#d5bdaf",
     borderRadius: 10,
     padding: 10,
@@ -187,6 +215,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
+  },
+  btnContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 });
 
