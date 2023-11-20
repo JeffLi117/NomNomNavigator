@@ -33,8 +33,6 @@ const handleNearbySearch = async (latitude, longitude, keyword = "", radius = 24
         `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&keyword=${keyword}&type=restaurant&key=${API_KEY}`
       );
     }
-
-
     const { data } = nearbySearchResponse;
     return data.results;
   } catch (error) {
@@ -42,5 +40,9 @@ const handleNearbySearch = async (latitude, longitude, keyword = "", radius = 24
     throw error;
   }
 };
+
+const handlePlaceDetailSearch = async (placeId) => {
+
+}
 
 export { handleGeocoding, handleNearbySearch };

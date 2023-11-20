@@ -11,9 +11,19 @@ import {
 } from "react-native";
 import CarouselCards from "../components/CarouselCards.js";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { AppContext } from '../context/AppContext.js';
 
 const RestaurantDetailScreen = ({ navigation }) => {
+  const { setCopiedList, selectedCuisines, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList } = useContext(AppContext);
+
+  useEffect(() => {
+    if (currentPlaceId) {
+
+    }
+  }, [])
+
+
   const [iconColor, setIconColor] = useState({
     color: "black",
     pressed: false,
@@ -22,6 +32,11 @@ const RestaurantDetailScreen = ({ navigation }) => {
   const changeColor = () => {
     setIconColor({ color: "#f18f01", pressed: true });
   };
+
+  const handleNextRestaurant = () => {
+    handleDeleteFromList()
+    navigation.navigate("RestaurantQuickView");
+  }
 
   return (
     <ScrollView>
@@ -54,7 +69,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
         >
           <Text styles={styles.text}>Get Directions</Text>
         </TouchableOpacity>
-        <Text onPress={() => navigation.goBack()}>New Restaurant</Text>
+        <Text onPress={handleNextRestaurant}>New Restaurant</Text>
       </View>
     </ScrollView>
   );

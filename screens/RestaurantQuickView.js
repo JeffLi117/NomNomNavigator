@@ -14,6 +14,7 @@ import { AppContext } from '../context/AppContext.js';
 const RestaurantQuickViewScreen = ({ navigation }) => {
   const { setCopiedList, selectedCuisines, copiedList, currentPlaceId, currentPlaceView, handleDeleteFromList } = useContext(AppContext);
   console.log(copiedList.length);
+
   const handleNext = () => {
     handleDeleteFromList();
     navigation.navigate("RestaurantQuickView");
