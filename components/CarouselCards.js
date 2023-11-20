@@ -4,13 +4,10 @@ import Carousel, { Pagination } from "react-native-snap-carousel";
 import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from "./CarouselCardItem";
 import { getDetailPhotos } from '../API.js';
 
-import data from "../data";
-
 const CarouselCards = ({ photoData }) => {
   const isCarousel = React.useRef(null);
   const [index, setIndex] = React.useState(0);
   const [photoURls, setPhotoURLs] = useState([]);
-
 
   useEffect(() => {
     const fetchPhotos = async () => {
