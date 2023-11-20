@@ -30,7 +30,7 @@ const handleNearbySearch = async (latitude, longitude, keyword = "", radius = 24
       );
     } else {
       nearbySearchResponse = await axios.get(
-        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=24000&keyword=${keyword}&type=restaurant&key=${API_KEY}`
+        `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radius}&keyword=${keyword}&type=restaurant&key=${API_KEY}`
       );
     }
 

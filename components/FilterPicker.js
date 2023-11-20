@@ -5,20 +5,21 @@ import { AppContext } from '../context/AppContext';
 const FilterPicker = ({ navigation }) => {
   const { selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, showRange } = useContext(AppContext);
   const arrOfNums = [1, 2, 3, 4, 5];
+  const arrOfCuisines = ["asian", "italian", "american", "breakfast", "diner", "fast food"]
 
   return (
     <View>
         <Text>Select the cuisines you're craving!</Text>
-        {Object.keys(selectedCuisines).map((key) => {
+        {arrOfCuisines.map((sel) => {
             return (
             <TouchableOpacity
-                key={key}
-                style={selectedCuisines[key] === 1 ? styles.selectedBtn : styles.regularBtn}
+                key={sel}
+                style={selectedCuisines === sel ? styles.selectedBtn : styles.regularBtn}
                 onPress={() => {
-                    toggleSelectedCuisines(key);
+                    toggleSelectedCuisines(sel);
                 }}
             >
-                <Text style={styles.buttonText}>{key}</Text>
+                <Text style={styles.buttonText}>{sel}</Text>
             </TouchableOpacity>
             );
         })}

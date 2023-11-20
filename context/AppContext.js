@@ -3,9 +3,7 @@ import React, { createContext, useState, useEffect } from 'react';
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
-  const [selectedCuisines, setSelectedCuisines] = useState({
-    "asian": 0, "japanese": 0, "korean": 0, "american": 0, "breakfast": 0, "diner": 0, "fast food": 0, "italian": 0,
-  });
+  const [selectedCuisines, setSelectedCuisines] = useState(null);
   const [selectedStars, setSelectedStars] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState([
     {"text": "$", priceLevel: 0, "toggle": 0},
@@ -15,7 +13,6 @@ const AppProvider = ({ children }) => {
     {"text": "$$$$$", priceLevel: 4, "toggle": 0},
   ]);
   const [showRange, setShowRange] = useState([]);
-  const [selectedCuisine, setSelectedCuisine] = useState("")
   // handleSetLocation makes location an object; ex:
   // {
   //   latitude: someNum,
@@ -24,18 +21,20 @@ const AppProvider = ({ children }) => {
   const [location, setLocation] = useState({});
   const [errorMsg, setErrorMsg] = useState(null);
 
-  const toggleSelectedCuisines = (objKey) => {
-    if (selectedCuisines[objKey] === 0) {
-        setSelectedCuisines({...selectedCuisines, [objKey]: 1});
-        setSelectedCuisine(objKey)
+  const toggleSelectedCuisines = (str) => {
+    if (selectedCuisines === str) {
+        setSelectedCuisines(null);
     } else {
-        setSelectedCuisines({...selectedCuisines, [objKey]: 0});
-        setSelectedCuisine("")
+        setSelectedCuisines(str);
     }
   };
   
   const toggleSelectedStars = (num) => {
-    setSelectedStars(num);
+    if (selectedStars === num) {
+      setSelectedStars(null);
+    } else {
+      setSelectedStars(num);
+    }
   };
   
   const toggleSelectedPrice = (priceLevel) => {
@@ -91,11 +90,11 @@ const AppProvider = ({ children }) => {
   }, [selectedPrice])
   
   useEffect(() => {
-    console.log("showRange is ", showRange);
-  }, [showRange])
+    console.log("selectedCuisines is ", selectedCuisines);
+  }, [selectedCuisines])
 
   return (
-    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg, showRange, selectedCuisine }}>
+    <AppContext.Provider value={{ selectedCuisines, toggleSelectedCuisines, selectedStars, toggleSelectedStars, selectedPrice, toggleSelectedPrice, location, handleSetLocation, errorMsg, handleSetErrorMsg, showRange }}>
       {children}
     </AppContext.Provider>
   );
