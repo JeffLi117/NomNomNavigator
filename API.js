@@ -43,7 +43,17 @@ const handleNearbySearch = async (latitude, longitude, keyword = "", radius = 24
   }
 };
 
+const getNearbyPhoto = async (photo_reference, maxWidth = 400) => {
+  try {
+    const nearbyPhoto = await axios.get(
+      `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${maxWidth}&photo_reference=${photo_reference}&key=${API_KEY}`
+    );
+    return nearbyPhoto;
+  } catch (error) {
+    console.error('Error in getting photo from nearby search photo_ref:', error);
+    throw error;
+  }
+};
 
-
-export { handleGeocoding, handleNearbySearch };
+export { handleGeocoding, handleNearbySearch, getNearbyPhoto };
 
