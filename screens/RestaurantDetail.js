@@ -142,12 +142,14 @@ const RestaurantDetailScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.detailButton}
           onPress={() => {
-            Linking.openURL(`http://maps.google.com/?q=your+query`);
+            Linking.openURL(`http://maps.google.com/?q=${restaurantDetails.formatted_address}`);
           }}
         >
           <Text styles={styles.detailButton}>Get Directions</Text>
         </TouchableOpacity>
-        <Text onPress={handleNextRestaurant}>New Restaurant</Text>
+        <TouchableOpacity style={styles.submitBtn}>
+          <Text style={styles.buttonText} onPress={handleNextRestaurant}>New Restaurant</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -167,6 +169,15 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     margin: 20,
+  },
+  submitBtn: {
+    backgroundColor: "#b0424d",
+    borderRadius: 10,
+    padding: 10,
+  },
+  buttonText: {
+    textAlign: "center",
+    color: "white",
   },
   infoContainer: {
     display: "flex",
@@ -227,13 +238,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    padding: 2
+    padding: 2,
+    margin: 3,
   },
   detailButton: {
     backgroundColor: "#d5bdaf",
     borderRadius: 10,
     margin: 5,
-    width: 120,
+    width: 160,
     height: 30,
     alignItems: "center",
     justifyContent: "center",
