@@ -30,15 +30,15 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
           <Icon name="star" style={styles.icon} size={25} />
         </View>
 
-        <View style={styles.bottomButtContainer}>
+        <View style={styles.bottomButtonContainer}>
           <TouchableOpacity
             onPress={() => navigation.navigate("RestaurantDetail")}
-            style={styles.bottomButt}
+            style={styles.bottomButton}
           >
             <Text>More Details</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.bottomButt}>
+          <TouchableOpacity style={styles.bottomButton}>
             <Text>Next Restaurant</Text>
           </TouchableOpacity>
         </View>
@@ -53,8 +53,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#f2e5d7",
-    paddingBottom: 20,
-    height: "100vh",
+    paddingBottom: 50,
   },
   carousel: {
     height: 450,
@@ -88,14 +87,14 @@ const styles = StyleSheet.create({
     // color changes to #f18f01 dependent on rating
     margin: 5,
   },
-  bottomButtContainer: {
+  bottomButtonContainer: {
     width: "100%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
   },
-  bottomButt: {
+  bottomButton: {
     backgroundColor: "#d5bdaf",
     borderRadius: 10,
     padding: 10,
