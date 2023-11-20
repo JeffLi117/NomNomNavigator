@@ -4,12 +4,10 @@ import Carousel, { Pagination } from "react-native-snap-carousel";
 import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from "./CarouselCardItem";
 import { getDetailPhotos } from '../API.js';
 
-import data from "../data";
-
 const CarouselCards = ({ photoData }) => {
   const isCarousel = React.useRef(null);
   const [index, setIndex] = React.useState(0);
-  const [photoURls, setPhotoURLs] = useState([])
+  const [photoURls, setPhotoURLs] = useState([]);
 
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -22,7 +20,11 @@ const CarouselCards = ({ photoData }) => {
       setPhotoURLs(newPhotoURLs)
     }
     fetchPhotos()
-  }, [])
+  }, []);
+
+  const handleCarouselSwipe = (index) => {
+    setIndex(index);
+  };
 
   return (
     <View>
@@ -36,6 +38,7 @@ const CarouselCards = ({ photoData }) => {
         itemWidth={ITEM_WIDTH}
         inactiveSlideShift={0}
         useScrollView={true}
+        onSnapToItem={(index) => handleCarouselSwipe(index)}
       />
       <Pagination
         dotsLength={photoURls.length}

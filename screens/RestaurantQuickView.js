@@ -98,6 +98,7 @@ const RestaurantQuickViewScreen = ({ navigation }) => {
           title="Go to RestaurantReview"
           onPress={() => navigation.navigate("RestaurantReview")}
         />
+
       </View>
     </ScrollView>
   );
