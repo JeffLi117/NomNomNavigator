@@ -39,6 +39,7 @@ const HomeScreen = ({ navigation }) => {
     });
   };
 
+
   const filterByStars = (resultArr) => {
     return resultArr.filter((result) => {
       return result.rating >= selectedStars;
