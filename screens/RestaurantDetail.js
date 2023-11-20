@@ -61,6 +61,14 @@ const RestaurantDetailScreen = ({ navigation }) => {
     navigation.navigate("RestaurantQuickView");
   }
 
+  const renderDollarSigns = (price_level) => {
+    let dollarSigns = ""
+    for (let i = 0; i < price_level; i++) {
+      dollarSigns += "$"
+    }
+    return dollarSigns
+  }
+
   if (isLoading) {
     return (
       <View>
@@ -73,7 +81,7 @@ const RestaurantDetailScreen = ({ navigation }) => {
     <ScrollView>
       <View style={styles.container}>
         <SafeAreaView style={styles.carousel}>
-          <CarouselCards />
+          <CarouselCards photoData={restaurantDetails.photos} />
         </SafeAreaView>
 
         {/* <View style={styles.iconContainer}>
@@ -87,9 +95,18 @@ const RestaurantDetailScreen = ({ navigation }) => {
         <Text style={styles.title}>{restaurantDetails.name}</Text>
         <View style={styles.detailsContainer}>
           <Text style={styles.info}>{restaurantDetails.formatted_address}</Text>
-          <Text style={styles.info}>{restaurantDetails.rating}</Text>
-          <Text style={styles.info}>restaurantDetails.menu</Text>
-          <Text style={styles.info}>price level</Text>
+
+          <Text style={styles.info}>
+            <Icon
+              name="star"
+              onPress={changeColor}
+              style={{ color: iconColor.color }}
+              size={25}
+            />
+            {restaurantDetails.rating}
+          </Text>
+          <Text style={styles.info}>{renderDollarSigns(restaurantDetails.price_level)}</Text>
+          <Text style={styles.info}>restaurantDetails.reviews</Text>
           {/* Other restaurant details */}
         </View>
         <TouchableOpacity

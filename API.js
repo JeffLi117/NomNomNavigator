@@ -66,6 +66,25 @@ const getNearbyPhoto = async (photo_reference, maxWidth = 400) => {
   }
 };
 
-export { handleGeocoding, handleNearbySearch, getNearbyPhoto, handlePlaceDetailQuery };
+const getDetailPhotos = async (photo_references, maxWidth = 400) => {
+
+  const photos = [];
+
+  for (const reference of photo_references) {
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${maxWidth}&photo_reference=${reference}&key=${API_KEY}`
+      );
+
+      photos.push({imgUrl: response.config.url}); // Assuming the actual photo data is in response.data
+    } catch (error) {
+      console.error(`Error fetching photo for reference ${reference}:`, error.message);
+      throw error;
+    }
+  }
+  return photos;
+}
+
+export { handleGeocoding, handleNearbySearch, getNearbyPhoto, handlePlaceDetailQuery, getDetailPhotos };
 
 
