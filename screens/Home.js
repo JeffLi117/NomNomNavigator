@@ -14,22 +14,9 @@ import { handleGeocoding, handleNearbySearch } from "../API";
 import GetExpoLocation from "../components/GetExpoLocation";
 
 const HomeScreen = ({ navigation }) => {
-  const [zipCode, setZipCode] = useState("");
   const [places, setPlaces] = useState([]);
-  const {
-    toggleSelectedCuisines,
-    toggleSelectedStars,
-    toggleSelectedPrice,
-    showRange,
-    selectedStars,
-    selectedCuisine,
-    setCopiedList,
-    copiedList,
-  } = useContext(AppContext);
-
-  const handleNavigate = () => {
-    navigation.navigate("RestaurantQuickView");
-  };
+  const [showError, setShowError] = useState(false);
+  const { zipCode, location, showRange, selectedStars, selectedCuisine, setCopiedList, copiedList } = useContext(AppContext);
 
   const filterByPrice = (resultArr) => {
     return resultArr.filter((result) => {
@@ -45,85 +32,79 @@ const HomeScreen = ({ navigation }) => {
     });
   };
 
-  const fetchCoordinates = async () => {
+  const getResults = async () => {
     try {
-      if (zipCode !== "") {
+      let latitude, longitude;
+      if (!location.latitude && !location.longitude) {
+        // if location in global context, go to else and get lat/lng
+        // otherwise, use zipCode
         const coordinates = await handleGeocoding(zipCode);
-
-        if (coordinates) {
-          const { latitude, longitude } = coordinates;
-          const nearbyPlaces = await handleNearbySearch(
-            latitude,
-            longitude,
-            selectedCuisine
-          );
-          let filtered;
-          let filtersRun = false;
-          if (showRange.length === 2) {
-            filtered = filterByPrice(nearbyPlaces);
-            filtersRun = true;
-          }
-          if (selectedStars) {
-            // nearbyPlaces has already been filtered by price, thus filtered array is not null
-            if (filtersRun) {
-              filtered = filterByStars(filtered);
-            } else {
-              filtered = filterByStars(nearbyPlaces);
-              filtersRun = true;
-            }
-          }
-          if (filtersRun) {
-            setPlaces(filtered);
-            setCopiedList(filtered);
-            console.log("# of filtered results is ", filtered.length);
-          } else {
-            setPlaces(nearbyPlaces);
-            setCopiedList(nearbyPlaces);
-          }
+        latitude = coordinates.latitude;
+        longitude = coordinates.longitude;
+      } else {
+        latitude = location.latitude;
+        longitude = location.longitude;
+      }
+      const nearbyPlaces = await handleNearbySearch(
+        latitude,
+        longitude,
+        selectedCuisine
+      );
+      let filtered;
+      let filtersRun = false;
+      if (showRange.length === 2) {
+        filtered = filterByPrice(nearbyPlaces);
+        filtersRun = true;
+      }
+      if (selectedStars) {
+        // nearbyPlaces has already been filtered by price, thus filtered array is not null
+        if (filtersRun) {
+          filtered = filterByStars(filtered);
+        } else {
+          filtered = filterByStars(nearbyPlaces);
+          filtersRun = true;
         }
+      }
+      if (filtersRun) {
+        setPlaces(filtered);
+        setCopiedList(filtered);
+        console.log("# of filtered results is ", filtered.length);
+      } else {
+        setPlaces(nearbyPlaces);
+        setCopiedList(nearbyPlaces);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }
 
   useEffect(() => {
-    fetchCoordinates();
-  }, [zipCode]);
-
-  useEffect(() => {
-    console.log("copiedList changed");
     if (copiedList.length > 0 && places.length > 0) {
       navigation.navigate("RestaurantQuickView");
     }
   }, [copiedList]);
 
-  const handleZipCodeSubmit = async (zip) => {
-    // Handle the submitted zip code, e.g., show an alert
-    setPlaces([]);
-    setZipCode(zip);
-  };
+  const handleSubmit = async () => {
+    if ((location.latitude && location.longitude) || zipCode.length === 5) {
+      setShowError(false);
+      setPlaces([]);
+      getResults();
+    } else {
+      setShowError(true);
+    }
+  }
 
   return (
     <ScrollView>
       <View>
-        {/* <GetExpoLocation /> */}
         <FilterPicker />
-        <ZipCodeForm onSubmit={handleZipCodeSubmit} />
-        {/* <TouchableOpacity
-          style={styles.findButton}
-          onPress={handleNavigate}
-        >
-          <Text style={styles.buttonText}>Go to RestaurantQuickView (Find)</Text>
+        <GetExpoLocation />
+        <Text style={styles.orText}>or</Text>
+        <ZipCodeForm />
+        {showError && <Text style={styles.errorText}>Please enable GPS access or enter a 5-digit zip code.</Text>}
+        <TouchableOpacity onPress={handleSubmit} style={styles.submitBtn}>
+          <Text style={styles.text}>Go</Text>
         </TouchableOpacity>
-        <Button
-          title="Go to MapScreen"
-          onPress={() => navigation.navigate('MapScreen')}
-        /> */}
-        <Text>Nearby Places:</Text>
-        {/* {places.map((place) => (
-          <Text key={place.place_id}>{place.name}</Text>
-        ))} */}
       </View>
     </ScrollView>
   );
@@ -139,4 +120,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
   },
+  submitBtn: {
+    backgroundColor: "#274690",
+    borderRadius: 10,
+    padding: 10,
+  },
+  orText: {
+    width: "fit-content",
+    textAlign: "center",
+  },
+  errorText: {
+    width: "fit-content",
+    textAlign: "center",
+    color: "red",
+  }
 });
