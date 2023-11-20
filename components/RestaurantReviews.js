@@ -4,10 +4,10 @@ import axios from 'axios';
 import uuid from 'react-native-uuid';
 
 
-const RestaurantReview = ( {restaurantReviewData} ) => {
+const RestaurantReview = ( { restaurantName, restaurantReviewData} ) => {
  return (
   <View>
-      <Text style={styles.header}>Restaurant Reviews</Text>
+      <Text style={styles.header}>Reviews for {restaurantName}</Text>
       <ScrollView style={styles.scrollView}>
         {restaurantReviewData.flat().map((item, index) => (
           <View key={uuid.v4()} style={styles.reviewContainer}>

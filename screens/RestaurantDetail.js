@@ -91,7 +91,10 @@ const RestaurantDetailScreen = ({ navigation }) => {
           >
             <Text styles={styles.text}>Back to Details</Text>
           </TouchableOpacity>
-          <RestaurantReviews restaurantReviewData={restaurantDetails.reviews} />
+          <RestaurantReviews
+            restaurantName={restaurantDetails.name}
+            restaurantReviewData={restaurantDetails.reviews}
+          />
         </View>
       </ScrollView>
     )
